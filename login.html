@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Connexion · Simulateurs CHARGEEEY</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23000'/%3E%3Crect x='9' y='9' width='15' height='3' rx='1.5' fill='%23D9FF00'/%3E%3Crect x='9' y='14.5' width='11' height='3' rx='1.5' fill='%23D9FF00'/%3E%3Crect x='9' y='20' width='15' height='3' rx='1.5' fill='%23D9FF00'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,600..800&family=Public+Sans:wght@400;500;600&display=swap">
+<style>
+:root{color-scheme:dark;--bg:#000;--card:#0E0F0C;--line:#2A2C24;--ink:#F4F6EE;--ink-2:#A9AE9C;--lime:#D9FF00;--bad:#FF8A7A;
+  --display:"Archivo","Arial Narrow",system-ui,sans-serif;--body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--body);display:flex;align-items:center;justify-content:center;padding:max(24px,env(safe-area-inset-top)) 16px max(24px,env(safe-area-inset-bottom))}
+main{width:100%;max-width:400px;display:flex;flex-direction:column;gap:28px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:44px;height:44px;border-radius:10px;background:#000;border:1px solid var(--line);display:flex;flex-direction:column;justify-content:center;gap:4px;padding:0 10px 0 14px;flex:none}
+.logo i{display:block;height:4px;border-radius:2px;background:var(--lime)}
+.logo i:nth-child(2){margin-right:6px}
+.wm{font-family:var(--display);font-stretch:85%;font-weight:800;font-size:22px;letter-spacing:.01em;line-height:1.1}
+.wm b{color:var(--lime)}
+.wm span{display:block;font-family:var(--body);font-weight:500;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+form{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 22px;display:flex;flex-direction:column;gap:18px}
+h1{margin:0;font-family:var(--display);font-stretch:85%;font-weight:800;font-size:28px;line-height:1.1;text-wrap:balance}
+p{margin:0;color:var(--ink-2)}
+label{font-size:13px;font-weight:600;color:var(--ink-2)}
+.code{width:100%;font:700 34px/1 var(--display);font-stretch:100%;letter-spacing:.42em;text-align:center;padding:16px 0 16px .42em;color:var(--ink);background:#000;border:1.5px solid var(--line);border-radius:10px;font-variant-numeric:tabular-nums;caret-color:var(--lime)}
+.code::placeholder{color:#3A3D33}
+.code:focus{outline:none;border-color:var(--lime);box-shadow:0 0 0 3px rgba(217,255,0,.18)}
+.code[aria-invalid=true]{border-color:var(--bad)}
+button{font:700 16px/1 var(--body);padding:15px;border-radius:10px;border:0;background:var(--lime);color:#000;cursor:pointer}
+button:disabled{opacity:.55;cursor:wait}
+button:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.msg{min-height:22px;font-size:14px;color:var(--bad)}
+.msg.ok{color:var(--lime)}
+.foot{font-size:13px;color:var(--ink-2);text-align:center}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+  <div class="brand">
+    <span class="logo" aria-hidden="true"><i></i><i></i><i></i></span>
+    <div class="wm">CHARGEEE<b>Y</b><span>Simulateurs · Dakar</span></div>
+  </div>
+
+  <form id="f" novalidate>
+    <h1>Accès réservé</h1>
+    <p>Saisissez le code à 6 chiffres que CHARGEEEY vous a remis.</p>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <label for="code">Code d'accès</label>
+      <input class="code" id="code" name="code" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="one-time-code" placeholder="••••••" required autofocus>
+    </div>
+    <button type="submit" id="btn">Accéder aux simulateurs</button>
+    <div class="msg" id="msg" role="status" aria-live="polite"></div>
+  </form>
+
+  <p class="foot">Pas de code ? Demandez-le à CHARGEEEY.<br>La connexion reste active 7 jours sur cet appareil.</p>
+</main>
+<script>
+(function(){
+  const f=document.getElementById('f'), input=document.getElementById('code'), btn=document.getElementById('btn'), msg=document.getElementById('msg');
+  let busy=false;
+  input.addEventListener('input',()=>{
+    input.value=input.value.replace(/\D/g,'').slice(0,6);
+    input.removeAttribute('aria-invalid'); msg.textContent=''; msg.className='msg';
+    if(input.value.length===6) submit();
+  });
+  f.addEventListener('submit',e=>{ e.preventDefault(); submit(); });
+  async function submit(){
+    if(busy) return;
+    const code=input.value;
+    if(code.length!==6){ msg.textContent='Le code comporte 6 chiffres.'; input.setAttribute('aria-invalid','true'); input.focus(); return; }
+    busy=true; btn.disabled=true; btn.textContent='Vérification…';
+    try{
+      const r=await fetch('/api/login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({code}),credentials:'same-origin'});
+      const d=await r.json().catch(()=>({}));
+      if(r.ok && d.ok){ msg.className='msg ok'; msg.textContent='Bienvenue'+(d.name?', '+d.name:'')+'. Ouverture…'; location.replace('/'); return; }
+      msg.textContent=d.error||'Connexion impossible. Réessayez dans un instant.';
+      input.setAttribute('aria-invalid','true'); input.value=''; input.focus();
+    }catch(e){
+      msg.textContent='Pas de connexion au serveur. Vérifiez votre réseau et réessayez.';
+    }
+    busy=false; btn.disabled=false; btn.textContent='Accéder aux simulateurs';
+  }
+})();
+</script>
+</body>
+</html>
