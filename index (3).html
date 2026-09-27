@@ -1,0 +1,1354 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Simulateurs de rentabilité CHARGEEEY : voiture VTC électrique (Geely EX2 Pro vs Wuling Bingo) et moto de livraison électrique vs thermique à Dakar.">
+<meta property="og:title" content="Simulateurs CHARGEEEY">
+<meta property="og:description" content="Voiture VTC ou moto de livraison : ce que coûte vraiment l'électrique à Dakar.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23000'/%3E%3Crect x='9' y='9' width='15' height='3' rx='1.5' fill='%23D9FF00'/%3E%3Crect x='9' y='14.5' width='11' height='3' rx='1.5' fill='%23D9FF00'/%3E%3Crect x='9' y='20' width='15' height='3' rx='1.5' fill='%23D9FF00'/%3E%3C/svg%3E">
+<style>:root{color-scheme:light}html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Simulateurs CHARGEEEY · VE Dakar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+
+:root{
+  --bg:#F3F5F7; --surface:#FFFFFF; --surface-2:#EAEEF2; --line:#D3DAE2;
+  --ink:#141C26; --ink-2:#4A5666; --ink-3:#6B7686;
+  --geely:#1D5CC2; --geely-soft:#E3ECFA; --wuling:#C4620F; --wuling-soft:#FBEBDC;
+  --good:#1E7A4C; --good-soft:#DDF1E6; --bad:#B3261E; --bad-soft:#FBE3E1; --warn:#8A5A00; --warn-soft:#FFF1CC;
+  --focus:#1D5CC2;
+  --s1:#3B4A5C; --s2:#2F7FA8; --s3:#7A5AA6; --s4:#8C8F3A; --s5:#B0555A;
+  --display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0E1319; --surface:#161E27; --surface-2:#1E2833; --line:#2E3A47;
+    --ink:#E7ECF1; --ink-2:#AEB9C6; --ink-3:#8793A1;
+    --geely:#77A6F2; --geely-soft:#1B2D4A; --wuling:#F2A560; --wuling-soft:#3A2816;
+    --good:#5FCB93; --good-soft:#153324; --bad:#F08A82; --bad-soft:#3D1B19; --warn:#F2C45E; --warn-soft:#3A2F12;
+    --focus:#77A6F2;
+    --s1:#6D7F95; --s2:#4A9CC6; --s3:#9A7CC6; --s4:#A8AB52; --s5:#C9767B;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0E1319; --surface:#161E27; --surface-2:#1E2833; --line:#2E3A47;
+  --ink:#E7ECF1; --ink-2:#AEB9C6; --ink-3:#8793A1;
+  --geely:#77A6F2; --geely-soft:#1B2D4A; --wuling:#F2A560; --wuling-soft:#3A2816;
+  --good:#5FCB93; --good-soft:#153324; --bad:#F08A82; --bad-soft:#3D1B19; --warn:#F2C45E; --warn-soft:#3A2F12;
+  --focus:#77A6F2;
+  --s1:#6D7F95; --s2:#4A9CC6; --s3:#9A7CC6; --s4:#A8AB52; --s5:#C9767B;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;padding-inline:16px;padding-block:20px 48px}
+[hidden]{display:none!important}
+
+.shell{max-width:1320px;margin:0 auto 18px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 20px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.brand{display:flex;flex-direction:column;gap:2px}
+.brand .k{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.brand .t{font-family:var(--display);font-stretch:85%;font-weight:800;font-size:20px;line-height:1.1}
+.brand-row{display:flex;align-items:center;gap:12px}
+.logo{width:40px;height:40px;border-radius:9px;background:#000;display:flex;flex-direction:column;justify-content:center;gap:4px;padding:0 9px 0 13px;flex:none}
+.logo i{display:block;height:4px;border-radius:2px;background:#D9FF00}
+.logo i:nth-child(2){margin-right:5px}
+.brand .wm{font-family:var(--display);font-stretch:85%;font-weight:800;font-size:21px;line-height:1.1;letter-spacing:.01em}
+.brand .wm b{color:#6E8500}
+.brand .wm em{font-style:normal;font-weight:600;color:var(--ink-2)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .brand .wm b{color:#D9FF00}}
+:root[data-theme="dark"] .brand .wm b{color:#D9FF00}
+.maintabs{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:3px;gap:3px;flex-wrap:wrap}
+.maintabs button{font:inherit;font-size:14px;font-weight:600;padding:8px 14px;border:0;border-radius:6px;background:none;color:var(--ink-2);cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+.maintabs button[aria-selected=true]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.maintabs button:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.maintabs .sw{width:18px;height:8px;border-radius:4px;display:inline-block}
+
+/* ===== Voiture ===== */
+:root{
+  --bg:#F3F5F7; --surface:#FFFFFF; --surface-2:#EAEEF2; --line:#D3DAE2;
+  --ink:#141C26; --ink-2:#4A5666; --ink-3:#6B7686;
+  --geely:#1D5CC2; --geely-soft:#E3ECFA; --wuling:#C4620F; --wuling-soft:#FBEBDC;
+  --good:#1E7A4C; --good-soft:#DDF1E6; --bad:#B3261E; --bad-soft:#FBE3E1; --warn:#8A5A00; --warn-soft:#FFF1CC;
+  --focus:#1D5CC2;
+  --s1:#3B4A5C; --s2:#2F7FA8; --s3:#7A5AA6; --s4:#8C8F3A; --s5:#B0555A;
+  --display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0E1319; --surface:#161E27; --surface-2:#1E2833; --line:#2E3A47;
+    --ink:#E7ECF1; --ink-2:#AEB9C6; --ink-3:#8793A1;
+    --geely:#77A6F2; --geely-soft:#1B2D4A; --wuling:#F2A560; --wuling-soft:#3A2816;
+    --good:#5FCB93; --good-soft:#153324; --bad:#F08A82; --bad-soft:#3D1B19; --warn:#F2C45E; --warn-soft:#3A2F12;
+    --focus:#77A6F2;
+    --s1:#6D7F95; --s2:#4A9CC6; --s3:#9A7CC6; --s4:#A8AB52; --s5:#C9767B;
+  }}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0E1319; --surface:#161E27; --surface-2:#1E2833; --line:#2E3A47;
+  --ink:#E7ECF1; --ink-2:#AEB9C6; --ink-3:#8793A1;
+  --geely:#77A6F2; --geely-soft:#1B2D4A; --wuling:#F2A560; --wuling-soft:#3A2816;
+  --good:#5FCB93; --good-soft:#153324; --bad:#F08A82; --bad-soft:#3D1B19; --warn:#F2C45E; --warn-soft:#3A2F12;
+  --focus:#77A6F2;
+  --s1:#6D7F95; --s2:#4A9CC6; --s3:#9A7CC6; --s4:#A8AB52; --s5:#C9767B;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;padding-inline:16px;padding-block:20px 48px}
+#carView .wrap{max-width:1320px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+#carView h1,#carView h2,#carView h3{font-family:var(--display);font-stretch:85%;margin:0;text-wrap:balance;letter-spacing:-.01em}
+#carView h1{font-size:clamp(26px,4vw,38px);font-weight:800;line-height:1.1}
+#carView h2{font-size:21px;font-weight:700}
+#carView h3{font-size:16px;font-weight:700}
+#carView p{margin:0}
+#carView .num,#carView td,#carView .kpi b,#carView output{font-variant-numeric:tabular-nums}
+#carView .eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+#carView header.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px}
+#carView header.top p{color:var(--ink-2);max-width:62ch}
+#carView .tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--warn-soft);color:var(--warn)}
+#carView /* Verdict */
+.verdict{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+#carView .kpi{display:flex;flex-direction:column;gap:2px}
+#carView .kpi b{font-family:var(--display);font-stretch:80%;font-size:30px;font-weight:800;line-height:1.1}
+#carView .kpi small{color:var(--ink-3);font-size:13px}
+#carView .kpi.g b{color:var(--geely)}
+#carView .kpi.w b{color:var(--wuling)}
+#carView .kpi .lab{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--ink-2)}
+#carView .dot{width:10px;height:10px;border-radius:50%;display:inline-block;flex:none}
+#carView .dot.g{background:var(--geely)}
+#carView .dot.w{background:var(--wuling)}
+#carView .verdict .call{grid-column:1/-1;padding-top:14px;border-top:1px solid var(--line);font-size:15px;color:var(--ink)}
+#carView .verdict .call strong{font-weight:700}
+#carView .app{display:grid;grid-template-columns:1fr;gap:20px;align-items:start}
+@media (min-width:1040px){#carView .app{grid-template-columns:370px 1fr}}
+#carView /* Panel */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px}
+#carView .panel>summary,#carView .panel>.ph{list-style:none;cursor:pointer;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+#carView .panel>summary::-webkit-details-marker{display:none}
+#carView .panel>summary::after{content:"";width:8px;height:8px;border-right:2px solid var(--ink-3);border-bottom:2px solid var(--ink-3);transform:rotate(45deg);transition:transform .15s}
+#carView .panel[open]>summary::after{transform:rotate(-135deg)}
+#carView .panel .pb{padding:0 16px 16px;display:flex;flex-direction:column;gap:14px}
+#carView .side{display:flex;flex-direction:column;gap:12px}
+#carView .field{display:flex;flex-direction:column;gap:5px}
+#carView .field label,#carView .field .fl{font-size:13px;font-weight:600;color:var(--ink-2);display:flex;justify-content:space-between;gap:8px}
+#carView .field label output{color:var(--ink);font-weight:700}
+#carView .field .hint{font-size:12px;color:var(--ink-3)}
+#carView input[type=number],#carView select{width:100%;font:inherit;font-size:14px;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:7px 9px;font-variant-numeric:tabular-nums}
+#carView input[type=range]{width:100%;accent-color:var(--ink-2)}
+#carView input:focus-visible,#carView select:focus-visible,#carView button:focus-visible,#carView summary:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+#carView .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#carView .check{display:flex;gap:9px;align-items:flex-start;font-size:13px;color:var(--ink-2)}
+#carView .check input{margin-top:3px}
+#carView .seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+#carView .seg button{font:inherit;font-size:13px;font-weight:600;padding:6px 10px;border:0;background:var(--surface-2);color:var(--ink-2);cursor:pointer}
+#carView .seg button[aria-pressed=true]{background:var(--ink);color:var(--surface)}
+#carView .veh-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#carView .veh{display:flex;flex-direction:column;gap:10px;padding:12px;border-radius:8px}
+#carView .veh.g{background:var(--geely-soft)}
+#carView .veh.w{background:var(--wuling-soft)}
+#carView .veh h3{display:flex;align-items:center;gap:7px}
+#carView .veh .field input{background:var(--surface)}
+#carView .derived{font-size:12px;color:var(--ink-2);border-top:1px dashed var(--line);padding-top:8px;display:flex;flex-direction:column;gap:2px}
+@media (max-width:460px){#carView .veh-grid{grid-template-columns:1fr}}
+#carView /* Results table */
+.main{display:flex;flex-direction:column;gap:20px;min-width:0}
+#carView .card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+#carView .card .sub{font-size:13px;color:var(--ink-3)}
+#carView .tbl-wrap{overflow-x:auto}
+#carView table{border-collapse:collapse;width:100%;font-size:14px}
+#carView th,#carView td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+#carView th:first-child,#carView td:first-child{text-align:left;white-space:normal}
+#carView thead th{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);border-bottom:2px solid var(--line)}
+#carView tr.grp td{font-family:var(--display);font-stretch:85%;font-weight:700;font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);background:var(--surface-2);border-bottom:0}
+#carView tr.key td{font-weight:700}
+#carView td.best{background:var(--good-soft);color:var(--good);font-weight:700}
+#carView td.neg{color:var(--bad)}
+#carView .th-g{color:var(--geely)!important}
+#carView .th-w{color:var(--wuling)!important}
+#carView td .u{color:var(--ink-3);font-size:12px;font-weight:400}
+#carView .charts{display:grid;grid-template-columns:1fr;gap:20px}
+@media (min-width:760px){#carView .charts{grid-template-columns:1fr 1fr}}
+#carView .cbox{position:relative;height:280px;width:100%}
+#carView .note-inline{font-size:13px;color:var(--ink-2)}
+#carView .sens td.cellg{color:var(--geely)}
+#carView .sens td.cellw{color:var(--wuling)}
+#carView .sens td.cur{outline:2px solid var(--ink-3);outline-offset:-2px}
+#carView .warnbox{background:var(--warn-soft);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:10px;color:var(--ink)}
+#carView .warnbox h2{color:var(--warn)}
+#carView .warnbox ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:14px}
+#carView .warnbox li strong{font-weight:700}
+#carView footer{font-size:12px;color:var(--ink-3)}
+#carView /* Onglets */
+.tabs{display:flex;gap:4px;border-bottom:2px solid var(--line);flex-wrap:wrap}
+#carView .tabs button{font:inherit;font-family:var(--display);font-stretch:85%;font-size:16px;font-weight:700;padding:10px 16px;border:0;background:none;color:var(--ink-3);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px}
+#carView .tabs button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--ink)}
+#carView #simView{display:flex;flex-direction:column;gap:20px}
+#carView /* Rapport */
+.rep-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+#carView .rep-tools .grp2{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+#carView .btn{font:inherit;font-size:14px;font-weight:600;padding:9px 14px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+#carView .btn.primary{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+#carView .toast{font-size:13px;color:var(--good);font-weight:600}
+#carView .paper{background:var(--surface);border:1px solid var(--line);border-radius:10px;max-width:900px;width:100%;margin:0 auto;padding:clamp(20px,4vw,48px);display:flex;flex-direction:column;gap:34px}
+#carView .paper section{display:flex;flex-direction:column;gap:12px}
+#carView .paper h2{font-size:24px;display:flex;align-items:baseline;gap:10px}
+#carView .paper h2 .n{font-size:14px;color:var(--ink-3);font-weight:600;font-stretch:100%}
+#carView .paper p,#carView .paper li{max-width:70ch}
+#carView .paper ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+#carView .cover{display:flex;flex-direction:column;gap:14px;padding-bottom:24px;border-bottom:2px solid var(--ink)}
+#carView .cover h1{font-size:clamp(28px,5vw,44px)}
+#carView .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px 24px;font-size:13px;color:var(--ink-2)}
+#carView .meta label{display:flex;flex-direction:column;gap:3px;font-weight:600;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3)}
+#carView .meta input{font:inherit;font-size:14px;font-weight:600;text-transform:none;letter-spacing:0;color:var(--ink);background:transparent;border:0;border-bottom:1px dashed var(--line);padding:2px 0}
+#carView .decision{border:2px solid var(--good);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:12px}
+#carView .decision.nogo{border-color:var(--bad)}
+#carView .decision .lbl{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--good)}
+#carView .decision.nogo .lbl{color:var(--bad)}
+#carView .decision .big{font-family:var(--display);font-stretch:80%;font-size:clamp(26px,4.5vw,38px);font-weight:800;line-height:1.1}
+#carView .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+#carView .tile{background:var(--surface-2);border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:4px}
+#carView .tile .t{font-size:12px;font-weight:600;color:var(--ink-3);text-transform:uppercase;letter-spacing:.05em}
+#carView .tile .v{display:flex;gap:14px;flex-wrap:wrap;align-items:baseline;font-family:var(--display);font-stretch:80%;font-weight:800;font-size:22px;font-variant-numeric:tabular-nums}
+#carView .tile .v .g{color:var(--geely)}
+#carView .tile .v .w{color:var(--wuling)}
+#carView .tile small{font-size:12px;color:var(--ink-3)}
+#carView .pill{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px}
+#carView .pill.ok{background:var(--good-soft);color:var(--good)}
+#carView .pill.ko{background:var(--bad-soft);color:var(--bad)}
+#carView .pill.mid{background:var(--warn-soft);color:var(--warn)}
+#carView .stack{display:flex;flex-direction:column;gap:14px}
+#carView .stack .rowv{display:flex;flex-direction:column;gap:6px}
+#carView .stack .rowv .hd{display:flex;justify-content:space-between;gap:10px;font-size:14px;font-weight:600;flex-wrap:wrap}
+#carView .bar{display:flex;height:30px;border-radius:5px;overflow:hidden;background:var(--surface-2)}
+#carView .bar span{height:100%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;min-width:0}
+#carView .legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--ink-2)}
+#carView .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+#carView .risk{display:grid;grid-template-columns:1fr;gap:10px}
+#carView .risk .r{display:grid;grid-template-columns:1fr auto auto;gap:6px 16px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+#carView .risk .r .d{font-variant-numeric:tabular-nums;font-weight:700;text-align:right}
+#carView .steps{counter-reset:st;list-style:none;padding:0!important}
+#carView .steps li{counter-increment:st;display:grid;grid-template-columns:32px 1fr;gap:10px}
+#carView .steps li::before{content:counter(st);font-family:var(--display);font-weight:800;font-size:18px;color:var(--ink-3)}
+#carView .fine{font-size:12px;color:var(--ink-3)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* ===== Moto ===== */
+
+#motoView{--panel:var(--surface);--muted:var(--ink-3);--field:var(--surface);--elec:#0A7C74;--elec-soft:#D3ECE8;--therm:#B85A18;--therm-soft:#F5E2D2;--mono:var(--body)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #motoView{--elec:#3CC2B6;--elec-soft:#133A37;--therm:#E68C4E;--therm-soft:#3E2616;--field:var(--surface-2)}}
+:root[data-theme="dark"] #motoView{--elec:#3CC2B6;--elec-soft:#133A37;--therm:#E68C4E;--therm-soft:#3E2616;--field:var(--surface-2)}
+
+#motoView .wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+#motoView .num,#motoView .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+#motoView header{display:flex;flex-direction:column;gap:6px}
+#motoView .eyebrow{font:600 12px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+#motoView h1{font:700 clamp(30px,5vw,46px)/1.02 var(--display);margin:0;text-wrap:balance;letter-spacing:.005em}
+#motoView h1 .e{color:var(--elec)}
+#motoView h1 .t{color:var(--therm)}
+#motoView .lede{color:var(--muted);max-width:68ch;margin:0}
+#motoView /* Verdict band */
+.verdict{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:22px}
+#motoView .verdict h2{font:600 20px/1.2 var(--display);margin:0 0 12px;letter-spacing:.01em;text-wrap:balance}
+#motoView .bars{display:flex;flex-direction:column;gap:12px}
+#motoView .barrow{display:grid;grid-template-columns:112px minmax(0,1fr) 108px;align-items:center;gap:10px}
+#motoView .barrow .lbl{font:600 14px/1.1 var(--display);text-transform:uppercase;letter-spacing:.06em}
+#motoView .barrow .tot{font:500 17px/1 var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+#motoView .stack{display:flex;height:26px;border-radius:4px;overflow:hidden;background:var(--bg)}
+#motoView .stack span{display:block;height:100%;min-width:0;transition:width .35s ease}
+#motoView .legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-size:12.5px;color:var(--muted)}
+#motoView .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+#motoView .kpis{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;align-content:start}
+#motoView .kpi{display:flex;flex-direction:column;gap:2px;border-top:2px solid var(--line);padding-top:8px}
+#motoView .kpi .k{font-size:12px;color:var(--muted);letter-spacing:.02em}
+#motoView .kpi .v{font:600 26px/1.05 var(--display);letter-spacing:.01em}
+#motoView .kpi .s{font-size:12px;color:var(--muted)}
+#motoView .kpi.hl{border-top-color:var(--elec)}
+#motoView .pill{display:inline-flex;align-items:center;gap:6px;font:600 12px/1 var(--body);padding:5px 9px;border-radius:999px;border:1px solid currentColor}
+#motoView .pill.good{color:var(--good)}
+#motoView .pill.warn{color:var(--warn)}
+#motoView .pill.bad{color:var(--bad)}
+#motoView /* main grid */
+.grid{display:grid;grid-template-columns:minmax(0,400px) minmax(0,1fr);gap:22px;align-items:start}
+#motoView .inputs{display:flex;flex-direction:column;gap:14px}
+#motoView fieldset{margin:0;border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:14px 16px 16px;display:grid;grid-template-columns:1fr 1fr;gap:10px 12px;min-width:0}
+#motoView legend{font:600 15px/1 var(--display);text-transform:uppercase;letter-spacing:.08em;padding:0 6px;margin-left:-6px;display:flex;align-items:center;gap:8px}
+#motoView legend .dot{width:10px;height:10px;border-radius:50%}
+#motoView .f{display:flex;flex-direction:column;gap:4px;min-width:0}
+#motoView .f.full{grid-column:1/-1}
+#motoView .f label{font-size:12.5px;color:var(--muted);line-height:1.25}
+#motoView .f .in{display:flex;align-items:stretch;border:1px solid var(--line);border-radius:6px;background:var(--field);overflow:hidden}
+#motoView .f .in:focus-within{border-color:var(--elec);box-shadow:0 0 0 2px var(--elec-soft)}
+#motoView .f input,#motoView .f select{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:500 14px/1 var(--mono);padding:8px 9px;font-variant-numeric:tabular-nums}
+#motoView .f select{font-family:var(--body);font-weight:500}
+#motoView .f input:focus,#motoView .f select:focus{outline:none}
+#motoView .f .u{font-size:11.5px;color:var(--muted);padding:0 8px;display:flex;align-items:center;border-left:1px solid var(--line);background:var(--bg);white-space:nowrap}
+#motoView .hint{grid-column:1/-1;font-size:12px;color:var(--muted);margin:0;line-height:1.4}
+#motoView .hint b{color:var(--ink);font-weight:600}
+#motoView input[type=range]{grid-column:1/-1;width:100%;accent-color:var(--elec)}
+#motoView .seg{grid-column:1/-1;display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+#motoView .seg button{flex:1;border:0;background:var(--field);color:var(--muted);font:500 13px/1 var(--body);padding:9px 6px;cursor:pointer}
+#motoView .seg button[aria-pressed="true"]{background:var(--elec);color:#fff}
+:root[data-theme="dark"] #motoView .seg button[aria-pressed="true"]{color:#06201D}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #motoView .seg button[aria-pressed="true"]{color:#06201D}}
+#motoView .seg button:focus-visible,#motoView .reset:focus-visible{outline:2px solid var(--elec);outline-offset:2px}
+#motoView .reset{align-self:flex-start;border:1px solid var(--line);background:var(--panel);color:var(--ink);font:500 13px/1 var(--body);padding:9px 12px;border-radius:6px;cursor:pointer}
+#motoView .results{display:flex;flex-direction:column;gap:18px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px)}
+#motoView .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+#motoView .card h3{font:600 17px/1.2 var(--display);text-transform:uppercase;letter-spacing:.07em;margin:0 0 4px}
+#motoView .card .sub{font-size:12.5px;color:var(--muted);margin:0 0 12px}
+#motoView .chartbox{width:100%;overflow-x:auto}
+#motoView svg text{font-family:var(--body);fill:var(--muted);font-size:11px}
+#motoView .axis{stroke:var(--line)}
+#motoView .grid-l{stroke:var(--line);stroke-dasharray:2 4}
+#motoView .l-e{stroke:var(--elec);fill:none;stroke-width:2.5}
+#motoView .l-t{stroke:var(--therm);fill:none;stroke-width:2.5}
+#motoView .a-e{fill:var(--elec);opacity:.08}
+#motoView .cross{fill:var(--panel);stroke:var(--ink);stroke-width:2}
+#motoView .cross-t{fill:var(--ink)!important;font-weight:600;font-size:12px!important}
+#motoView .bat{fill:var(--elec)}
+#motoView table{width:100%;border-collapse:collapse;font-size:13.5px}
+#motoView th,#motoView td{padding:8px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+#motoView th{font:600 11.5px/1.2 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+#motoView th:first-child,#motoView td:first-child{text-align:left}
+#motoView td.num{font-family:var(--mono)}
+#motoView tr.cur td{background:var(--elec-soft)}
+#motoView .tablebox{overflow-x:auto}
+#motoView .cmp{display:grid;grid-template-columns:minmax(0,1.4fr) 1fr 1fr;gap:0}
+#motoView .cmp div{padding:7px 4px;border-bottom:1px solid var(--line);font-size:13.5px}
+#motoView .cmp .h{font:600 11.5px/1.2 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+#motoView .cmp .n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+#motoView .cmp .he{color:var(--elec);text-align:right}
+#motoView .cmp .ht{color:var(--therm);text-align:right}
+#motoView .cmp .strong{font-weight:600}
+#motoView .lld{display:flex;flex-direction:column;gap:8px}
+#motoView .lld p{margin:0}
+#motoView footer{font-size:12.5px;color:var(--muted);max-width:90ch;display:flex;flex-direction:column;gap:6px}
+#motoView footer p{margin:0}
+@media (max-width:900px){#motoView .grid{grid-template-columns:minmax(0,1fr)}
+#motoView .results{position:static}
+#motoView .verdict{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:460px){#motoView .barrow{grid-template-columns:70px minmax(0,1fr);}
+#motoView .barrow .tot{grid-column:1/-1;text-align:left}
+#motoView .kpis{grid-template-columns:1fr 1fr}
+#motoView fieldset{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){#motoView .stack span{transition:none}}
+</style>
+</head>
+<body>
+
+
+<div class="shell">
+  <div class="brand-row"><span class="logo" aria-hidden="true"><i></i><i></i><i></i></span><div class="brand"><span class="wm">CHARGEEE<b>Y</b> <em>Simulateurs</em></span><span class="k">Rentabilité des véhicules électriques · Dakar · 2026</span></div></div>
+  <nav class="maintabs" role="tablist" aria-label="Simulateurs">
+    <button type="button" role="tab" id="mtCar" aria-selected="true" aria-controls="carView"><span class="sw" style="background:linear-gradient(90deg,var(--geely) 50%,var(--wuling) 50%)"></span>Voiture VTC</button>
+    <button type="button" role="tab" id="mtMoto" aria-selected="false" aria-controls="motoView"><span class="sw" style="background:linear-gradient(90deg,#0A7C74 50%,#B85A18 50%)"></span>Moto de livraison</button>
+  </nav>
+</div>
+
+<div id="carView" role="tabpanel">
+<div class="wrap">
+  <header class="top">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span class="eyebrow">VTC électrique · Dakar · 2026</span>
+      <h1>Geely EX2 Pro contre Wuling Bingo</h1>
+      <p>Ce que coûte réellement chaque véhicule pour un chauffeur Yango : leasing BCI, énergie SENELEC, batterie, assurance, maintenance et temps perdu à la recharge.</p>
+    </div>
+    <span class="tag">V1 · estimations de marché, à remplacer par des devis</span>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Vues">
+    <button type="button" role="tab" id="tabSim" aria-selected="true" aria-controls="simView">Simulateur</button>
+    <button type="button" role="tab" id="tabRep" aria-selected="false" aria-controls="repView">Rapport de décision</button>
+  </nav>
+
+  <div id="simView" role="tabpanel">
+
+  <section class="verdict" aria-live="polite">
+    <div class="kpi g"><span class="lab"><span class="dot g"></span>Geely EX2 Pro · marge nette / mois</span><b id="vG">—</b><small id="vGs"></small></div>
+    <div class="kpi w"><span class="lab"><span class="dot w"></span>Wuling Bingo · marge nette / mois</span><b id="vW">—</b><small id="vWs"></small></div>
+    <div class="kpi"><span class="lab">Coût au km (TCO)</span><b id="vKm" style="font-size:24px">—</b><small>Geely / Wuling</small></div>
+    <div class="kpi"><span class="lab">Point de bascule (coût au km)</span><b id="vBasc" style="font-size:24px">—</b><small id="vBascS"></small></div>
+    <p class="call" id="verdictTxt"></p>
+  </section>
+
+  <div class="app">
+    <!-- PARAMÈTRES -->
+    <aside class="side" aria-label="Paramètres">
+      <details class="panel" open>
+        <summary><h2>1 · Véhicules</h2></summary>
+        <div class="pb">
+          <div class="veh-grid">
+            <div class="veh g" data-v="g">
+              <h3><span class="dot g"></span>Geely EX2 Pro</h3>
+              <div class="field"><label for="g_prix">Prix d'achat (FCFA)</label><input type="number" id="g_prix" value="13000000" step="100000" min="0"></div>
+              <div class="field"><label for="g_batt">Batterie (kWh)</label><input type="number" id="g_batt" value="39.4" step="0.1" min="1"></div>
+              <div class="field"><label for="g_aut">Autonomie annoncée (km)</label><input type="number" id="g_aut" value="410" step="5" min="0"></div>
+              <div class="field"><label for="g_conso">Conso. réelle (kWh/100 km)</label><input type="number" id="g_conso" value="20" step="0.5" min="1"></div>
+              <div class="field"><label for="g_cbatt">Batterie neuve (FCFA)</label><input type="number" id="g_cbatt" value="3000000" step="100000" min="0"></div>
+              <div class="field"><label for="g_cyc">Durée de vie (cycles)</label><input type="number" id="g_cyc" value="1800" step="100" min="100"></div>
+              <div class="field"><label for="g_rap">Recharge rapide 30→80 % (min)</label><input type="number" id="g_rap" value="25" step="1" min="0"></div>
+              <div class="field"><label for="g_lent">Recharge lente 0→100 % (h)</label><input type="number" id="g_lent" value="12" step="0.5" min="0"></div>
+              <div class="derived" id="g_der"></div>
+            </div>
+            <div class="veh w" data-v="w">
+              <h3><span class="dot w"></span>Wuling Bingo 333</h3>
+              <div class="field"><label for="w_prix">Prix d'achat (FCFA)</label><input type="number" id="w_prix" value="5500000" step="100000" min="0"></div>
+              <div class="field"><label for="w_batt">Batterie (kWh)</label><input type="number" id="w_batt" value="31.9" step="0.1" min="1"></div>
+              <div class="field"><label for="w_aut">Autonomie annoncée (km)</label><input type="number" id="w_aut" value="333" step="5" min="0"></div>
+              <div class="field"><label for="w_conso">Conso. réelle (kWh/100 km)</label><input type="number" id="w_conso" value="16" step="0.5" min="1"></div>
+              <div class="field"><label for="w_cbatt">Batterie neuve (FCFA)</label><input type="number" id="w_cbatt" value="2200000" step="100000" min="0"></div>
+              <div class="field"><label for="w_cyc">Durée de vie (cycles)</label><input type="number" id="w_cyc" value="1200" step="100" min="100"></div>
+              <div class="field"><label for="w_rap">Recharge rapide 30→80 % (min)</label><input type="number" id="w_rap" value="35" step="1" min="0"></div>
+              <div class="field"><label for="w_lent">Recharge lente 0→100 % (h)</label><input type="number" id="w_lent" value="9.5" step="0.5" min="0"></div>
+              <div class="derived" id="w_der"></div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="panel" open>
+        <summary><h2>2 · Financement BCI</h2></summary>
+        <div class="pb">
+          <div class="field"><label for="apport">Apport initial (FCFA)</label><input type="number" id="apport" value="1500000" step="100000" min="0"></div>
+          <div class="row2">
+            <div class="field"><label for="duree">Durée (mois)</label><input type="number" id="duree" value="48" step="6" min="12" max="84"></div>
+            <div class="field"><label for="taux">Taux annuel (%)</label><input type="number" id="taux" value="10" step="0.5" min="0" max="30"></div>
+          </div>
+          <div class="field"><label for="resid">Valeur résiduelle en fin de leasing <output id="resid_o"></output></label><input type="range" id="resid" min="0" max="50" step="5" value="20"><span class="hint">% du prix d'achat. Inconnue à ce jour.</span></div>
+          <label class="check"><input type="checkbox" id="inclus"> <span>Le loyer BCI inclut déjà l'assurance et la maintenance (ne pas les compter en plus)</span></label>
+        </div>
+      </details>
+
+      <details class="panel" open>
+        <summary><h2>3 · Exploitation Yango</h2></summary>
+        <div class="pb">
+          <div class="field">
+            <span class="fl">Scénario d'activité</span>
+            <div class="seg" role="group" aria-label="Scénario d'activité">
+              <button type="button" class="scn" data-c="15" aria-pressed="false">Prudent · 15</button>
+              <button type="button" class="scn" data-c="20" aria-pressed="true">Référence · 20</button>
+              <button type="button" class="scn" data-c="25" aria-pressed="false">Haut · 25</button>
+            </div>
+          </div>
+          <div class="field"><label for="courses">Courses par jour <output id="courses_o"></output></label><input type="range" id="courses" min="5" max="30" step="1" value="20"><span class="hint">30 et plus : seuil de bonus exigeant, pas une moyenne.</span></div>
+          <div class="field"><label for="tarifc">Panier moyen par course (FCFA)</label><input type="number" id="tarifc" value="1750" step="50" min="0"><span class="hint" id="caJour"></span></div>
+          <div class="field"><label for="comm">Commission Yango <output id="comm_o"></output></label><input type="range" id="comm" min="15" max="25" step="0.5" value="18"></div>
+          <div class="field"><label for="km">Kilométrage journalier <output id="km_o"></output></label><input type="range" id="km" min="150" max="400" step="10" value="300"></div>
+          <div class="row2">
+            <div class="field"><label for="jours">Jours / mois</label><input type="number" id="jours" value="26" step="1" min="1" max="31"></div>
+            <div class="field"><label for="heures">Heures / jour</label><input type="number" id="heures" value="11" step="1" min="1" max="18"></div>
+          </div>
+          <div class="field">
+            <span class="fl">Immobilisation pour recharge en journée</span>
+            <div class="seg" role="group" aria-label="Mode de calcul">
+              <button type="button" id="modeAuto" aria-pressed="true">Selon le véhicule</button>
+              <button type="button" id="modeMan" aria-pressed="false">Valeur unique</button>
+            </div>
+            <span class="hint" id="immoHint"></span>
+          </div>
+          <div class="field" id="immoField" hidden><label for="immo">Temps d'immobilisation / jour <output id="immo_o"></output></label><input type="range" id="immo" min="0" max="120" step="5" value="30"></div>
+        </div>
+      </details>
+
+      <details class="panel" open>
+        <summary><h2>4 · Coûts</h2></summary>
+        <div class="pb">
+          <div class="field"><label for="senelec">Tarif SENELEC PPP (FCFA/kWh)</label>
+            <select id="senelec">
+              <option value="147.43">1ʳᵉ tranche · 147,43</option>
+              <option value="189.84" selected>2ᵉ tranche · 189,84</option>
+              <option value="208.63">3ᵉ tranche · 208,63</option>
+              <option value="custom">Autre (borne publique, groupe…)</option>
+            </select>
+          </div>
+          <div class="field" id="customField" hidden><label for="senelecC">Tarif personnalisé (FCFA/kWh)</label><input type="number" id="senelecC" value="250" step="5" min="0"></div>
+          <div class="field"><label for="assur">Assurance VTC annuelle (FCFA)</label><input type="number" id="assur" value="180000" step="10000" min="0"><span class="hint">Fourchette observée : 130 000 à 280 000</span></div>
+          <div class="field"><label for="maint">Maintenance mensuelle (FCFA)</label><input type="number" id="maint" value="10000" step="1000" min="0"></div>
+          <button type="button" id="reset" style="font:inherit;font-size:13px;font-weight:600;padding:8px 12px;border:1px solid var(--line);border-radius:6px;background:var(--surface-2);color:var(--ink);cursor:pointer;align-self:flex-start">Revenir aux valeurs par défaut</button>
+        </div>
+      </details>
+    </aside>
+
+    <!-- RÉSULTATS -->
+    <main class="main">
+      <section class="card">
+        <div><h2>5 · Résultats mensuels et sur la durée</h2><p class="sub" id="resSub"></p></div>
+        <div class="tbl-wrap">
+          <table id="res">
+            <thead><tr><th>Indicateur</th><th class="th-g">Geely EX2 Pro</th><th class="th-w">Wuling Bingo</th><th>Écart G − W</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="charts">
+        <div class="card"><h3>Coûts mensuels par poste</h3><div class="cbox"><canvas id="c1" aria-label="Coûts mensuels par poste"></canvas></div></div>
+        <div class="card"><h3>Marge nette mensuelle du chauffeur</h3><div class="cbox"><canvas id="c3" aria-label="Marge nette mensuelle"></canvas></div></div>
+        <div class="card"><h3>Coût cumulé sur la durée du leasing</h3><p class="note-inline" id="c2note"></p><div class="cbox"><canvas id="c2" aria-label="Coût cumulé"></canvas></div></div>
+        <div class="card"><h3>Coût au km selon le kilométrage journalier</h3><p class="note-inline" id="c4note"></p><div class="cbox"><canvas id="c4" aria-label="Coût au km selon kilométrage"></canvas></div></div>
+      </section>
+
+      <section class="card sens">
+        <div><h2>6 · Sensibilité du coût au km</h2><p class="sub">Coût total de possession divisé par les km parcourus sur la durée du leasing. Les autres paramètres restent ceux du panneau. La case encadrée correspond à votre réglage.</p></div>
+        <h3>Kilométrage journalier × tarif SENELEC</h3>
+        <div class="tbl-wrap"><table id="sens1"></table></div>
+        <h3>Taux du leasing</h3>
+        <div class="tbl-wrap"><table id="sens2"></table></div>
+      </section>
+
+      <section class="warnbox">
+        <h2>7 · Hypothèses et limites</h2>
+        <ul>
+          <li><strong>Prix d'achat</strong> : estimations de marché. À remplacer par des devis concessionnaires.</li>
+          <li><strong>Revenus</strong> : aucune moyenne officielle Yango ou Heetch pour le Sénégal. Repères : 35 000 FCFA brut/jour (annonce Urban Cars, Dakar 2024), 30 000 à 50 000 FCFA/jour (TeranGO, discours commercial), minimum de 20 courses par shift de 10 à 11 h dans une annonce de flotte. 20 courses × 1 750 FCFA = 35 000 FCFA/jour. À vérifier sur le terrain.</li>
+          <li><strong>Taux BCI</strong> : non public. 10 % par défaut, testez 8 à 14 % dans le tableau de sensibilité.</li>
+          <li><strong>Batterie</strong> : la dégradation sous climat chaud et en usage intensif (1,5 cycle/jour) n'est pas documentée. Le coût est amorti par cycle consommé, même si le remplacement tombe après la fin du leasing.</li>
+          <li><strong>Valeur résiduelle</strong> : inconnue, fixée à 20 % par défaut. Mettez 0 % pour un scénario prudent.</li>
+          <li><strong>Infrastructure de recharge</strong> : non incluse (wallbox, abonnement, borne publique). Au-delà d'environ 200 km/jour, les deux véhicules ont besoin d'une recharge rapide en journée.</li>
+          <li><strong>Tranche SENELEC</strong> : à 300 km/jour, un véhicule consomme 1 200 à 1 600 kWh/mois, bien au-delà de la 1ʳᵉ tranche. Une borne publique rapide sera facturée plus cher : utilisez « Autre ».</li>
+          <li><strong>Leasing « tout compris »</strong> : si l'offre BCI inclut assurance, maintenance et couverture sociale, cochez la case du panneau 2 pour éviter de les compter deux fois. La couverture sociale n'est pas chiffrée ici.</li>
+          <li><strong>Manque à gagner recharge</strong> : coût d'opportunité (courses non faites pendant la charge), déduit de la marge.</li>
+          <li><strong>Pilote</strong> : un test de 3 mois sur 2 à 3 véhicules est recommandé avant tout achat en volume.</li>
+        </ul>
+      </section>
+
+      <footer>Formules : mensualité à annuité constante ; autonomie réelle = batterie ÷ consommation réelle ; TCO = apport + loyers + (énergie + assurance + maintenance + batterie) × durée − valeur résiduelle. Les graphiques et tableaux se recalculent à chaque modification.</footer>
+    </main>
+  </div>
+  </div>
+
+  <div id="repView" role="tabpanel" hidden style="display:flex;flex-direction:column;gap:16px">
+    <div class="rep-tools">
+      <p class="fine" style="max-width:60ch">Le rapport se met à jour avec les réglages du simulateur. Modifiez un paramètre dans l'onglet Simulateur, puis revenez ici.</p>
+      <div class="grp2"><span class="toast" id="copyMsg" aria-live="polite"></span><button type="button" class="btn primary" id="copyRep">Copier le résumé (e-mail, WhatsApp)</button></div>
+    </div>
+    <article class="paper" id="paper">
+      <header class="cover">
+        <span class="eyebrow">Rapport de décision · flotte VTC électrique · Dakar</span>
+        <h1>Quel véhicule électrique pour nos chauffeurs VTC ?</h1>
+        <p style="color:var(--ink-2)">Comparaison Geely EX2 Pro et Wuling Bingo en leasing BCI, pour un chauffeur Yango à plein temps.</p>
+        <div class="meta">
+          <label>Préparé pour<input id="rep_for" value="Comité de décision"></label>
+          <label>Préparé par<input id="rep_by" value="CHARGEEEY LAB"></label>
+          <label>Date<input id="rep_date" value=""></label>
+        </div>
+      </header>
+
+      <section>
+        <h2><span class="n">1</span>Décision recommandée</h2>
+        <div class="decision" id="r_dec"></div>
+      </section>
+
+      <section>
+        <h2><span class="n">2</span>Chiffres clés</h2>
+        <div class="tiles" id="r_tiles"></div>
+      </section>
+
+      <section>
+        <h2><span class="n">3</span>Selon l'activité du chauffeur</h2>
+        <p id="r_scn_intro"></p>
+        <div class="tbl-wrap"><table id="r_scn"></table></div>
+      </section>
+
+      <section>
+        <h2><span class="n">4</span>Où va l'argent chaque mois</h2>
+        <p>Répartition du chiffre d'affaires net (après commission Yango). La part verte est ce qui reste au chauffeur.</p>
+        <div class="stack" id="r_bars"></div>
+        <div class="legend" id="r_leg"></div>
+      </section>
+
+      <section>
+        <h2><span class="n">5</span>Compte d'exploitation mensuel</h2>
+        <div class="tbl-wrap"><table id="r_pl"></table></div>
+      </section>
+
+      <section>
+        <h2><span class="n">6</span>Risques : ce qui peut faire basculer la décision</h2>
+        <p>Effet de chaque risque sur la marge nette mensuelle du chauffeur, toutes choses égales par ailleurs.</p>
+        <div class="risk" id="r_risk"></div>
+      </section>
+
+      <section>
+        <h2><span class="n">7</span>Prochaines étapes</h2>
+        <ol class="steps" id="r_steps"></ol>
+      </section>
+
+      <section>
+        <h2><span class="n">8</span>Hypothèses utilisées</h2>
+        <div class="tbl-wrap"><table id="r_hyp"></table></div>
+        <p class="fine">Estimations de marché (V1). Prix d'achat, taux BCI, coût et durée de vie de la batterie et valeur résiduelle sont à confirmer par devis. Revenus : pas de moyenne officielle Yango/Heetch au Sénégal ; repères 35 000 FCFA brut/jour (Urban Cars, 2024) et 30 000 à 50 000 FCFA/jour (TeranGO). Infrastructure de recharge non incluse.</p>
+      </section>
+    </article>
+  </div>
+</div>
+</div>
+
+<div id="motoView" role="tabpanel" hidden>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Livraison urbaine · Dakar · 2026</span>
+    <h1>Moto <span class="e">électrique</span> ou moto <span class="t">thermique</span> : combien coûtent vraiment 100&nbsp;km&nbsp;?</h1>
+    <p class="lede">Simulateur de coût total de possession (TCO) construit à partir de l'analyse du Dr El Hadji Ndongo Diaw (7 sept. 2026). Les valeurs par défaut reprennent ses chiffres ; les coûts de batterie, d'entretien et d'assurance sont des hypothèses à remplacer par les devis fournisseurs.</p>
+  </header>
+
+  <section class="verdict" aria-label="Résultat principal">
+    <div>
+      <h2 id="m_v-title">Coût réel pour 100 km, batterie comprise</h2>
+      <div class="bars">
+        <div class="barrow"><span class="lbl" style="color:var(--elec)">Électrique</span><div class="stack" id="m_stackE"></div><span class="tot" id="m_totE">–</span></div>
+        <div class="barrow"><span class="lbl" style="color:var(--therm)">Thermique</span><div class="stack" id="m_stackT"></div><span class="tot" id="m_totT">–</span></div>
+      </div>
+      <div class="legend" id="m_legend"></div>
+    </div>
+    <div class="kpis">
+      <div class="kpi hl"><span class="k">Économie nette / moto / mois</span><span class="v num" id="m_k-save">–</span><span class="s" id="m_k-save-s"></span></div>
+      <div class="kpi hl"><span class="k">Surcoût d'achat récupéré en</span><span class="v" id="m_k-pay">–</span><span class="s" id="m_k-pay-s"></span></div>
+      <div class="kpi"><span class="k" id="m_k-tco-l">Gain sur la durée (TCO)</span><span class="v num" id="m_k-tco">–</span><span class="s" id="m_k-tco-s"></span></div>
+      <div class="kpi"><span class="k">Statut</span><span id="m_k-status"></span><span class="s" id="m_k-status-s"></span></div>
+    </div>
+  </section>
+
+  <div class="grid">
+    <form class="inputs" id="m_form" onsubmit="return false">
+      <fieldset>
+        <legend><span class="dot" style="background:var(--ink)"></span>Usage</legend>
+        <div class="f full"><label for="m_km">Kilomètres par jour et par moto</label><div class="in"><input id="m_km" type="number" min="10" max="400" step="5"><span class="u">km/j</span></div></div>
+        <input type="range" id="m_kmR" min="20" max="250" step="5" aria-label="Kilomètres par jour">
+        <div class="f"><label for="m_jours">Jours travaillés</label><div class="in"><input id="m_jours" type="number" min="1" max="31"><span class="u">j/mois</span></div></div>
+        <div class="f"><label for="m_heures">Heures de service</label><div class="in"><input id="m_heures" type="number" min="1" max="24"><span class="u">h/j</span></div></div>
+        <div class="f"><label for="m_liv">Livraisons par jour</label><div class="in"><input id="m_liv" type="number" min="0" max="200"><span class="u">/j</span></div></div>
+        <div class="f"><label for="m_caliv">Recette par livraison</label><div class="in"><input id="m_caliv" type="number" min="0" step="50"><span class="u">FCFA</span></div></div>
+        <div class="f"><label for="m_horizon">Durée d'analyse</label><div class="in"><input id="m_horizon" type="number" min="6" max="72" step="6"><span class="u">mois</span></div></div>
+        <div class="f"><label for="m_flotte">Taille de flotte</label><div class="in"><input id="m_flotte" type="number" min="1" max="1000"><span class="u">motos</span></div></div>
+      </fieldset>
+
+      <fieldset>
+        <legend><span class="dot" style="background:var(--elec)"></span>Moto électrique</legend>
+        <div class="f full"><label for="m_modele">Modèle (prix relevés au Sénégal)</label><div class="in"><select id="m_modele">
+          <option value="970000">Revoo E52 · 970 000 FCFA</option>
+          <option value="770000">Revoo C32 Pro · 770 000 FCFA</option>
+          <option value="520000">Revoo A12 · 520 000 FCFA</option>
+          <option value="410000">Revoo A10 · 410 000 FCFA</option>
+          <option value="custom">Autre (prix saisi)</option>
+        </select></div></div>
+        <div class="f"><label for="m_prixE">Prix d'achat</label><div class="in"><input id="m_prixE" type="number" min="0" step="10000"><span class="u">FCFA</span></div></div>
+        <div class="f"><label for="m_kwh">Batterie</label><div class="in"><input id="m_kwh" type="number" min="0.5" step="0.01"><span class="u">kWh</span></div></div>
+        <div class="f"><label for="m_auto">Autonomie réelle</label><div class="in"><input id="m_auto" type="number" min="10" step="5"><span class="u">km/charge</span></div></div>
+        <div class="f"><label for="m_pertes">Pertes de recharge</label><div class="in"><input id="m_pertes" type="number" min="0" max="50"><span class="u">%</span></div></div>
+        <div class="f full"><label for="m_tarif">Tarif SENELEC (CRSE, au 1er janv. 2026)</label><div class="in"><select id="m_tarif">
+          <option value="82">Domestique PP · 1re tranche · 82 FCFA/kWh</option>
+          <option value="136.49">Domestique PP · 2e tranche · 136,49</option>
+          <option value="159.36">Domestique PP · 3e tranche · 159,36</option>
+          <option value="147.43">Professionnel PP · 1re tranche · 147,43</option>
+          <option value="189.84">Professionnel PP · 2e tranche · 189,84</option>
+          <option value="208.63">Professionnel PP · 3e tranche · 208,63</option>
+        </select></div></div>
+        <p class="hint">Pour une flotte, l'article recommande de ne pas bâtir le business plan sur le tarif domestique de 82 FCFA/kWh.</p>
+
+        <span class="f full"><label>Mode de recharge</label></span>
+        <div class="seg" role="group" aria-label="Mode de recharge">
+          <button type="button" id="m_m-classic" aria-pressed="true">Recharge classique</button>
+          <button type="button" id="m_m-swap" aria-pressed="false">Battery swap</button>
+        </div>
+        <div class="f" id="m_w-lost"><label for="m_lost">Heures perdues à recharger</label><div class="in"><input id="m_lost" type="number" min="0" max="12" step="0.5"><span class="u">h/j</span></div></div>
+        <div class="f" id="m_w-swap" hidden><label for="m_swap">Prix d'un échange</label><div class="in"><input id="m_swap" type="number" min="0" step="50"><span class="u">FCFA</span></div></div>
+        <div class="f" id="m_w-batp"><label for="m_batp">Prix batterie neuve</label><div class="in"><input id="m_batp" type="number" min="0" step="10000"><span class="u">FCFA</span></div></div>
+        <div class="f" id="m_w-cyc"><label for="m_cycles">Durée de vie batterie</label><div class="in"><input id="m_cycles" type="number" min="100" step="100"><span class="u">cycles</span></div></div>
+        <p class="hint" id="m_h-mode"></p>
+
+        <div class="f"><label for="m_maintE">Entretien</label><div class="in"><input id="m_maintE" type="number" min="0" step="1000"><span class="u">FCFA/mois</span></div></div>
+        <div class="f"><label for="m_assE">Assurance et divers</label><div class="in"><input id="m_assE" type="number" min="0" step="1000"><span class="u">FCFA/mois</span></div></div>
+        <div class="f"><label for="m_resE">Valeur de revente en fin de période</label><div class="in"><input id="m_resE" type="number" min="0" max="100"><span class="u">% du prix</span></div></div>
+      </fieldset>
+
+      <fieldset>
+        <legend><span class="dot" style="background:var(--therm)"></span>Moto thermique</legend>
+        <div class="f"><label for="m_prixT">Prix d'achat (occasion, type Jakarta)</label><div class="in"><input id="m_prixT" type="number" min="0" step="10000"><span class="u">FCFA</span></div></div>
+        <div class="f"><label for="m_conso">Consommation</label><div class="in"><input id="m_conso" type="number" min="0.5" step="0.1"><span class="u">L/100 km</span></div></div>
+        <div class="f"><label for="m_carbu">Supercarburant</label><div class="in"><input id="m_carbu" type="number" min="0" step="10"><span class="u">FCFA/L</span></div></div>
+        <div class="f"><label for="m_maintT">Entretien</label><div class="in"><input id="m_maintT" type="number" min="0" step="1000"><span class="u">FCFA/mois</span></div></div>
+        <div class="f"><label for="m_assT">Assurance et divers</label><div class="in"><input id="m_assT" type="number" min="0" step="1000"><span class="u">FCFA/mois</span></div></div>
+        <div class="f"><label for="m_resT">Valeur de revente en fin de période</label><div class="in"><input id="m_resT" type="number" min="0" max="100"><span class="u">% du prix</span></div></div>
+        <p class="hint">Supercarburant à 990 FCFA/L depuis le 15 août 2026 (+70 FCFA/L).</p>
+      </fieldset>
+
+      <fieldset>
+        <legend><span class="dot" style="background:var(--muted)"></span>Location longue durée</legend>
+        <div class="f full"><label for="m_loyer">Loyer mensuel d'une moto électrique (batterie et entretien inclus)</label><div class="in"><input id="m_loyer" type="number" min="0" step="1000"><span class="u">FCFA/mois</span></div></div>
+        <p class="hint">Offres de type MOTAWILL : motos, batteries, swap et entretien regroupés. Saisissez le loyer du devis reçu.</p>
+      </fieldset>
+
+      <button type="button" class="reset" id="m_reset">Revenir aux valeurs de l'article</button>
+    </form>
+
+    <div class="results">
+      <div class="card">
+        <h3>Coût cumulé par moto</h3>
+        <p class="sub" id="m_chart-sub">Achat, énergie, entretien et remplacements de batterie, mois par mois.</p>
+        <div class="chartbox"><svg id="m_chart" viewBox="0 0 640 290" width="100%" role="img" aria-label="Coût cumulé électrique contre thermique"></svg></div>
+        <div class="legend"><span><i style="background:var(--elec)"></i>Électrique</span><span><i style="background:var(--therm)"></i>Thermique</span><span><i style="background:var(--elec);border-radius:50%"></i>Remplacement de batterie</span></div>
+      </div>
+
+      <div class="card">
+        <h3>Détail mensuel par moto</h3>
+        <p class="sub" id="m_det-sub"></p>
+        <div class="cmp" id="m_cmp"></div>
+      </div>
+
+      <div class="card">
+        <h3>Productivité</h3>
+        <p class="sub">Les indicateurs que l'article demande de suivre pendant le pilote.</p>
+        <div class="cmp" id="m_prod"></div>
+      </div>
+
+      <div class="card">
+        <h3>Sensibilité au kilométrage</h3>
+        <p class="sub">Même hypothèses, seul le nombre de km/jour change. La ligne surlignée est votre scénario.</p>
+        <div class="tablebox"><table id="m_sens"></table></div>
+      </div>
+
+      <div class="card lld">
+        <h3>Test location longue durée</h3>
+        <p class="sub">Règle de l'article : mensualité &lt; économie mensuelle + marge additionnelle.</p>
+        <div id="m_lld"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p><b>Sources.</b> Dr El Hadji Ndongo Diaw, « Deux-roues électrique vs voiture électrique pour la livraison à Dakar : où se trouve réellement la rentabilité en 2026 ? », 7 septembre 2026. Tarifs SENELEC publiés par la CRSE au 1er janvier 2026. Prix des modèles Revoo relevés au Sénégal.</p>
+    <p><b>Limites.</b> Le prix de la batterie (350 000 FCFA), sa durée de vie (1 000 cycles), l'entretien, l'assurance et les valeurs de revente sont des hypothèses. Le financement (intérêts) et la dégradation de la batterie sous forte chaleur ne sont pas modélisés. Un pilote de 5 à 10 motos pendant 3 mois reste le seul moyen de fixer ces valeurs.</p>
+  </footer>
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+(function(){
+const $ = id => document.getElementById(id);
+const nf = new Intl.NumberFormat('fr-FR',{maximumFractionDigits:0});
+const nf1 = new Intl.NumberFormat('fr-FR',{maximumFractionDigits:1});
+const F = n => nf.format(Math.round(n)).replace(/ /g,' ') + ' FCFA';
+const N = n => nf.format(Math.round(n)).replace(/ /g,' ');
+const N1 = n => nf1.format(n).replace(/ /g,' ');
+const S = n => (n>0?'+':n<0?'−':'') + nf.format(Math.abs(Math.round(n))).replace(/ /g,' ');
+
+let autoMode = true;
+const defaults = {};
+document.querySelectorAll('#carView input,#carView select').forEach(el=>{ defaults[el.id] = el.type==='checkbox'? el.checked : el.value; });
+
+function veh(p){ return {
+  prix:+$(p+'_prix').value, batt:+$(p+'_batt').value, aut:+$(p+'_aut').value, conso:+$(p+'_conso').value,
+  cbatt:+$(p+'_cbatt').value, cyc:+$(p+'_cyc').value, rap:+$(p+'_rap').value, lent:+$(p+'_lent').value }; }
+function params(){
+  const s = $('senelec').value;
+  return {
+    apport:+$('apport').value, duree:Math.max(1,+$('duree').value), taux:+$('taux').value, resid:+$('resid').value,
+    inclus:$('inclus').checked, courses:+$('courses').value, tarifc:+$('tarifc').value, comm:+$('comm').value,
+    km:+$('km').value, jours:+$('jours').value, heures:Math.max(1,+$('heures').value), immo:+$('immo').value,
+    senelec: s==='custom'? +$('senelecC').value : +s, assur:+$('assur').value, maint:+$('maint').value, auto:autoMode };
+}
+function mensualite(capital, tauxAn, n){
+  if(capital<=0) return 0;
+  const r = tauxAn/100/12;
+  if(r===0) return capital/n;
+  const f = Math.pow(1+r,n);
+  return capital * r * f / (f-1);
+}
+function calc(v, p){
+  const R = v.batt / v.conso * 100;               // autonomie réelle (km)
+  const kmMois = p.km * p.jours;
+  const coutKmEnergie = v.conso/100 * p.senelec;
+  const energie = coutKmEnergie * kmMois;
+  const cyclesMois = kmMois / R;
+  const vieMois = v.cyc / cyclesMois;
+  const batterie = v.cbatt / vieMois;
+  const assur = p.inclus ? 0 : p.assur/12;
+  const maint = p.inclus ? 0 : p.maint;
+  const fixes = assur + maint;
+  // recharges rapides nécessaires en journée : départ à 100 %, on roule jusqu'à 10 %, chaque charge rapide = +50 %
+  const reste = p.km - 0.9*R;
+  const nRecharges = reste > 0 ? Math.ceil(reste / (0.5*R)) : 0;
+  const immo = p.auto ? nRecharges * v.rap : p.immo;
+  const caBrut = p.courses * p.tarifc * p.jours;
+  const commission = caBrut * p.comm/100;
+  const caNet = caBrut - commission;
+  const manque = (immo/60) * (p.courses/p.heures) * p.tarifc * (1 - p.comm/100) * p.jours;
+  const avantLeasing = caNet - energie - fixes - batterie - manque;
+  const financed = Math.max(0, v.prix - p.apport);
+  const mens = mensualite(financed, p.taux, p.duree);
+  const marge = avantLeasing - mens;
+  const H = p.duree;
+  const residuel = v.prix * p.resid/100;
+  const tco = p.apport + mens*H + (energie + fixes + batterie)*H - residuel;
+  const coutKm = tco / (kmMois*H);
+  const coursesMois = p.courses*p.jours;
+  const coutCourse = tco / (coursesMois*H);
+  const margeHeure = marge / (p.heures*p.jours);
+  const netParCourse = p.tarifc*(1-p.comm/100);
+  const varParCourse = (energie + batterie) / coursesMois;
+  const margeCourse = netParCourse - varParCourse;
+  const seuil = margeCourse > 0 ? (mens + fixes) / margeCourse : Infinity;
+  return {R,kmMois,coutKmEnergie,energie,cyclesMois,vieMois,batterie,assur,maint,fixes,nRecharges,immo,caBrut,commission,caNet,manque,avantLeasing,financed,mens,marge,tco,coutKm,coutCourse,margeHeure,seuil,coursesMois,residuel,H};
+}
+
+/* ---------- Charts ---------- */
+const charts = {};
+function css(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+function baseOpts(){
+  const ink2=css('--ink-2'), line=css('--line');
+  return { responsive:true, maintainAspectRatio:false, animation:{duration:0},
+    plugins:{ legend:{labels:{color:ink2,font:{family:'Public Sans',size:12},boxWidth:12}},
+      tooltip:{callbacks:{label:c=>`${c.dataset.label} : ${N(c.parsed.y ?? c.parsed)}${c.dataset.unit||' FCFA'}`}} },
+    scales:{ x:{ticks:{color:ink2,font:{family:'Public Sans',size:11}},grid:{color:line,display:false}},
+             y:{ticks:{color:ink2,font:{family:'Public Sans',size:11},callback:v=>N(v)},grid:{color:line}} } };
+}
+function makeCharts(){
+  Object.values(charts).forEach(c=>c.destroy());
+  if(typeof Chart==='undefined') return;
+  const G=css('--geely'), W=css('--wuling');
+  charts.c1 = new Chart($('c1'),{type:'bar',data:{labels:[],datasets:[
+    {label:'Geely',data:[],backgroundColor:G,borderRadius:3},{label:'Wuling',data:[],backgroundColor:W,borderRadius:3}]},options:baseOpts()});
+  const o3 = baseOpts(); o3.plugins.legend.display=false;
+  charts.c3 = new Chart($('c3'),{type:'bar',data:{labels:['Geely EX2 Pro','Wuling Bingo'],datasets:[{label:'Marge nette',data:[],backgroundColor:[G,W],borderRadius:4,maxBarThickness:90}]},options:o3});
+  const o2 = baseOpts(); o2.elements={point:{radius:0,hoverRadius:4}}; o2.interaction={mode:'index',intersect:false};
+  o2.scales.x.ticks.maxTicksLimit=9;
+  charts.c2 = new Chart($('c2'),{type:'line',data:{labels:[],datasets:[
+    {label:'Geely',data:[],borderColor:G,backgroundColor:G,borderWidth:2.5,tension:0},
+    {label:'Wuling',data:[],borderColor:W,backgroundColor:W,borderWidth:2.5,tension:0},
+    {label:'Bascule',data:[],type:'scatter',pointRadius:7,pointBackgroundColor:css('--ink'),borderColor:css('--surface'),borderWidth:2,showLine:false}]},options:o2});
+  const o4 = baseOpts(); o4.elements={point:{radius:0,hoverRadius:4}}; o4.interaction={mode:'index',intersect:false};
+  o4.plugins.tooltip.callbacks.label = c=>`${c.dataset.label} : ${N1(c.parsed.y)} FCFA/km`;
+  o4.scales.x.title={display:true,text:'km par jour',color:css('--ink-3')};
+  charts.c4 = new Chart($('c4'),{type:'line',data:{labels:[],datasets:[
+    {label:'Geely',data:[],borderColor:G,backgroundColor:G,borderWidth:2.5},
+    {label:'Wuling',data:[],borderColor:W,backgroundColor:W,borderWidth:2.5},
+    {label:'Votre réglage',data:[],type:'scatter',pointRadius:6,pointBackgroundColor:css('--ink'),borderColor:css('--surface'),borderWidth:2}]},options:o4});
+}
+
+/* ---------- Render ---------- */
+function bascule(vg, vw, p){
+  // km/jour où les coûts au km s'égalisent (recherche 100–500 km)
+  let prev=null, found=null;
+  for(let k=100;k<=500;k+=1){
+    const q={...p,km:k};
+    const d = calc(vg,q).coutKm - calc(vw,q).coutKm;
+    if(prev!==null && Math.sign(d)!==Math.sign(prev.d) && d!==0){ found = prev.k + (k-prev.k)*(prev.d/(prev.d-d)); break; }
+    prev={k,d};
+  }
+  return {found, sign: prev ? Math.sign(prev.d) : 0};
+}
+
+function render(){
+  const p = params(), vg = veh('g'), vw = veh('w');
+  if($('repView') && !$('repView').hidden) renderReport();
+  const g = calc(vg,p), w = calc(vw,p);
+
+  $('courses_o').textContent = p.courses;
+  document.querySelectorAll('.scn').forEach(b=>b.setAttribute('aria-pressed', +b.dataset.c===p.courses ? 'true':'false'));
+  const caj = p.courses*p.tarifc;
+  $('caJour').innerHTML = `CA brut : <b>${N(caj)} FCFA/jour</b>, ${N(caj*p.jours)} FCFA/mois. Repère Dakar : 35 000 FCFA/jour. ${N1(p.km/Math.max(1,p.courses))} km par course, trajets à vide compris.`;
+  $('comm_o').textContent = N1(p.comm)+' %';
+  $('km_o').textContent = p.km+' km';
+  $('immo_o').textContent = p.immo+' min';
+  $('resid_o').textContent = p.resid+' %';
+  $('immoField').hidden = autoMode;
+  $('customField').hidden = $('senelec').value!=='custom';
+  $('immoHint').textContent = autoMode
+    ? `Nombre de charges rapides nécessaires × durée d'une charge. Aujourd'hui : Geely ${g.nRecharges} × ${vg.rap} min = ${g.immo} min, Wuling ${w.nRecharges} × ${vw.rap} min = ${w.immo} min.`
+    : 'Même durée appliquée aux deux véhicules.';
+
+  [['g',g,vg],['w',w,vw]].forEach(([k,r,v])=>{
+    $(k+'_der').innerHTML = `<span>Autonomie réelle : <b>${N(r.R)} km</b> (annoncée ${N(v.aut)})</span>
+      <span>Énergie : <b>${N1(r.coutKmEnergie)} FCFA/km</b></span>
+      <span>Batterie usée en <b>${N1(r.vieMois)} mois</b> (${N1(r.cyclesMois)} cycles/mois)</span>`;
+  });
+
+  // Verdict
+  $('vG').textContent = F(g.marge); $('vW').textContent = F(w.marge);
+  $('vGs').textContent = `${N(g.margeHeure)} FCFA/heure · loyer ${N(g.mens)}`;
+  $('vWs').textContent = `${N(w.margeHeure)} FCFA/heure · loyer ${N(w.mens)}`;
+  $('vG').style.color = g.marge<0? 'var(--bad)':''; $('vW').style.color = w.marge<0? 'var(--bad)':'';
+  $('vKm').textContent = `${N(g.coutKm)} / ${N(w.coutKm)} FCFA`;
+  const b = bascule(vg,vw,p);
+  if(b.found){ $('vBasc').textContent = `${N(b.found)} km/jour`;
+    const cheaperAbove = calc(vg,{...p,km:Math.min(500,b.found+20)}).coutKm < calc(vw,{...p,km:Math.min(500,b.found+20)}).coutKm ? 'Geely':'Wuling';
+    $('vBascS').textContent = `Au-delà, la ${cheaperAbove} coûte moins cher au km`; }
+  else { $('vBasc').textContent = 'Aucun'; $('vBascS').textContent = `La ${b.sign>0?'Wuling':'Geely'} reste moins chère au km de 100 à 500 km/jour`; }
+  const best = g.marge>w.marge ? ['Geely EX2 Pro','Wuling Bingo',g,w] : ['Wuling Bingo','Geely EX2 Pro',w,g];
+  const diff = best[2].marge - best[3].marge;
+  let txt = `Avec ces réglages, la <strong>${best[0]}</strong> rapporte <strong>${F(diff)} de plus par mois</strong> au chauffeur que la ${best[1]}, soit ${F(diff*p.duree)} sur ${p.duree} mois.`;
+  if(g.marge<0 || w.marge<0){
+    const neg = [g.marge<0?'Geely':null, w.marge<0?'Wuling':null].filter(Boolean).join(' et la ');
+    txt += ` Attention : la ${neg} ${g.marge<0&&w.marge<0?'sont':'est'} en perte une fois le loyer payé.`;
+  }
+  $('verdictTxt').innerHTML = txt;
+
+  // Tableau résultats
+  $('resSub').textContent = `${p.courses} courses/jour à ${N(p.tarifc)} FCFA, ${p.km} km/jour, ${p.jours} jours/mois, SENELEC ${N1(p.senelec)} FCFA/kWh, leasing ${p.duree} mois à ${N1(p.taux)} %.`;
+  const rows = [
+    ['grp','Revenus'],
+    ['CA brut mensuel','caBrut','hi'],
+    ['Commission Yango','commission','lo'],
+    ['CA net mensuel','caNet','hi'],
+    ['grp','Coûts mensuels'],
+    ['Énergie SENELEC','energie','lo'],
+    ['Batterie amortie','batterie','lo'],
+    ['Assurance + maintenance','fixes','lo'],
+    ['Manque à gagner recharge','manque','lo', r=>`${r.immo} min/jour`],
+    ['Revenu net avant leasing','avantLeasing','hi',null,'key'],
+    ['Mensualité leasing','mens','lo', r=>`sur ${N(r.financed)} financés`],
+    ['Marge nette chauffeur','marge','hi',null,'key'],
+    ['grp','Indicateurs'],
+    ['Marge par heure','margeHeure','hi'],
+    ['TCO sur la durée du leasing','tco','lo', r=>`${r.H} mois, résiduel ${N(r.residuel)} déduit`],
+    ['Coût au km','coutKm','lo',null,null,'km'],
+    ['Coût par course','coutCourse','lo'],
+    ['Seuil de rentabilité','seuil','lo',r=>`vous faites ${N(r.coursesMois)} courses/mois`,null,'courses'],
+  ];
+  const tb = $('res').querySelector('tbody'); tb.innerHTML='';
+  rows.forEach(row=>{
+    const tr=document.createElement('tr');
+    if(row[0]==='grp'){ tr.className='grp'; tr.innerHTML=`<td colspan="4">${row[1]}</td>`; tb.appendChild(tr); return; }
+    const [label,key,dir,sub,cls,unit] = row;
+    if(cls) tr.className=cls;
+    const a=g[key], c=w[key];
+    const fmt = x => !isFinite(x) ? 'jamais' : unit==='km' ? `${N1(x)} <span class="u">FCFA/km</span>` : unit==='courses' ? `${N(x)} <span class="u">courses/mois</span>` : `${N(x)} <span class="u">FCFA</span>`;
+    const same = Math.abs(a-c)<0.5;
+    const gBest = !same && (dir==='hi'? a>c : a<c);
+    const wBest = !same && !gBest;
+    const showBest = !['caBrut','commission','caNet'].includes(key);
+    const subG = sub? `<br><span class="u">${sub(g)}</span>`:'', subW = sub? `<br><span class="u">${sub(w)}</span>`:'';
+    const d = a-c;
+    tr.innerHTML = `<td>${label}</td>
+      <td class="${showBest&&gBest?'best':''} ${a<0&&dir==='hi'?'neg':''}">${fmt(a)}${subG}</td>
+      <td class="${showBest&&wBest?'best':''} ${c<0&&dir==='hi'?'neg':''}">${fmt(c)}${subW}</td>
+      <td>${isFinite(d)? (unit==='km'? (d>0?'+':d<0?'−':'')+N1(Math.abs(d)) : S(d)) : '—'}</td>`;
+    tb.appendChild(tr);
+  });
+
+  // Charts
+  if(charts.c1){
+    charts.c1.data.labels=['Leasing','Énergie','Batterie','Assurance','Maintenance','Manque à gagner'];
+    charts.c1.data.datasets[0].data=[g.mens,g.energie,g.batterie,g.assur,g.maint,g.manque];
+    charts.c1.data.datasets[1].data=[w.mens,w.energie,w.batterie,w.assur,w.maint,w.manque];
+    charts.c1.update();
+    charts.c3.data.datasets[0].data=[g.marge,w.marge];
+    charts.c3.data.datasets[0].backgroundColor=[g.marge<0?css('--bad'):css('--geely'), w.marge<0?css('--bad'):css('--wuling')];
+    charts.c3.update();
+
+    const H=p.duree, labels=[], cg=[], cw=[];
+    const opG=g.energie+g.fixes+g.batterie, opW=w.energie+w.fixes+w.batterie;
+    for(let m=0;m<=H;m++){ labels.push(m===0?'Départ':'M'+m);
+      cg.push(p.apport + m*(g.mens+opG) - (m===H?g.residuel:0));
+      cw.push(p.apport + m*(w.mens+opW) - (m===H?w.residuel:0)); }
+    let cross=null;
+    for(let m=1;m<=H;m++){ if(Math.sign(cg[m]-cw[m])!==Math.sign(cg[m-1]-cw[m-1]) && cg[m-1]!==cw[m-1]){ cross=m; break; } }
+    charts.c2.data.labels=labels; charts.c2.data.datasets[0].data=cg; charts.c2.data.datasets[1].data=cw;
+    charts.c2.data.datasets[2].data = cross? labels.map((l,i)=> i===cross? cg[i]: null) : [];
+    charts.c2.update();
+    $('c2note').textContent = cross
+      ? `Les courbes se croisent au mois ${cross}.`
+      : `Écart final : ${F(Math.abs(cg[H]-cw[H]))} en faveur de la ${cg[H]<cw[H]?'Geely':'Wuling'}. Les courbes ne se croisent pas : même apport, loyer ${cg[1]>cw[1]?'Geely':'Wuling'} plus élevé dès le premier mois.`;
+
+    const kms=[], kg=[], kw=[];
+    for(let k=150;k<=400;k+=10){ kms.push(k); kg.push(calc(vg,{...p,km:k}).coutKm); kw.push(calc(vw,{...p,km:k}).coutKm); }
+    charts.c4.data.labels=kms; charts.c4.data.datasets[0].data=kg; charts.c4.data.datasets[1].data=kw;
+    const idx = kms.indexOf(p.km);
+    charts.c4.data.datasets[2].data = kms.map((k,i)=> i===idx ? w.coutKm : null);
+    charts.c4.update();
+    $('c4note').textContent = `Plus on roule, plus le loyer se dilue. À ${p.km} km/jour : Geely ${N1(g.coutKm)} FCFA/km, Wuling ${N1(w.coutKm)} FCFA/km.`;
+  }
+
+  // Sensibilité 1
+  const tarifs=[147.43,189.84,208.63], kmsS=[150,200,250,300,350,400];
+  let h='<thead><tr><th rowspan="2">km / jour</th>'+tarifs.map(t=>`<th colspan="2" style="text-align:center">${N1(t)} FCFA/kWh</th>`).join('')+'</tr><tr>'+tarifs.map(()=>'<th class="th-g">Geely</th><th class="th-w">Wuling</th>').join('')+'</tr></thead><tbody>';
+  kmsS.forEach(k=>{
+    h+=`<tr><td>${k} km</td>`;
+    tarifs.forEach(t=>{ const q={...p,km:k,senelec:t}; const cur = k===p.km && Math.abs(t-p.senelec)<0.01;
+      h+=`<td class="cellg ${cur?'cur':''}">${N1(calc(vg,q).coutKm)}</td><td class="cellw ${cur?'cur':''}">${N1(calc(vw,q).coutKm)}</td>`; });
+    h+='</tr>';
+  });
+  $('sens1').innerHTML = h+'</tbody>';
+  // Sensibilité 2
+  const tx=[8,10,12,14];
+  let h2='<thead><tr><th>Taux</th><th class="th-g">Geely · FCFA/km</th><th class="th-w">Wuling · FCFA/km</th><th class="th-g">Geely · loyer</th><th class="th-w">Wuling · loyer</th><th class="th-g">Geely · marge</th><th class="th-w">Wuling · marge</th></tr></thead><tbody>';
+  tx.forEach(t=>{ const q={...p,taux:t}, a=calc(vg,q), c=calc(vw,q), cur=Math.abs(t-p.taux)<0.01?'cur':'';
+    h2+=`<tr><td>${t} %</td><td class="cellg ${cur}">${N1(a.coutKm)}</td><td class="cellw ${cur}">${N1(c.coutKm)}</td><td>${N(a.mens)}</td><td>${N(c.mens)}</td><td class="${a.marge<0?'neg':''}">${N(a.marge)}</td><td class="${c.marge<0?'neg':''}">${N(c.marge)}</td></tr>`; });
+  $('sens2').innerHTML = h2+'</tbody>';
+}
+
+/* ---------- Events ---------- */
+document.querySelectorAll('#carView input,#carView select').forEach(el=> el.addEventListener('input',render));
+document.querySelectorAll('.scn').forEach(b=>b.addEventListener('click',()=>{ $('courses').value=b.dataset.c; render(); }));
+$('modeAuto').addEventListener('click',()=>{autoMode=true;$('modeAuto').setAttribute('aria-pressed','true');$('modeMan').setAttribute('aria-pressed','false');render();});
+$('modeMan').addEventListener('click',()=>{autoMode=false;$('modeMan').setAttribute('aria-pressed','true');$('modeAuto').setAttribute('aria-pressed','false');render();});
+$('reset').addEventListener('click',()=>{
+  Object.entries(defaults).forEach(([id,v])=>{ const el=$(id); if(!el) return; if(el.type==='checkbox') el.checked=v; else el.value=v; });
+  autoMode=true; $('modeAuto').setAttribute('aria-pressed','true'); $('modeMan').setAttribute('aria-pressed','false'); render();
+});
+function retheme(){ makeCharts(); render(); }
+try{ matchMedia('(prefers-color-scheme: dark)').addEventListener('change',retheme); }catch(e){}
+new MutationObserver(retheme).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+if(window.innerWidth<1040){ document.querySelectorAll('.side details').forEach((d,i)=>{ if(i>0) d.open=false; }); }
+
+/* ---------- Rapport ---------- */
+function pointMort(v,p){ for(let c=1;c<=60;c+=0.5){ if(calc(v,{...p,courses:c}).marge>=0) return c; } return null; }
+let lastSummary='';
+function renderReport(){
+  const p=params(), vg=veh('g'), vw=veh('w'), g=calc(vg,p), w=calc(vw,p);
+  const names={g:'Geely EX2 Pro',w:'Wuling Bingo'};
+  const bestK = g.marge>=w.marge?'g':'w', othK = bestK==='g'?'w':'g';
+  const R={g,w}, V={g:vg,w:vw};
+  const best=R[bestK], oth=R[othK];
+  const scn=[15,20,25].map(c=>({c, g:calc(vg,{...p,courses:c}).marge, w:calc(vw,{...p,courses:c}).marge}));
+  const bestWins = scn.filter(x=> (bestK==='g'? x.g>x.w : x.w>x.g)).length;
+  const pmG=pointMort(vg,p), pmW=pointMort(vw,p);
+  const pm={g:pmG,w:pmW};
+  const diff=best.marge-oth.marge;
+  if(!$('rep_date').value) $('rep_date').value = new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
+
+  // 1. Décision
+  const dec=$('r_dec');
+  if(best.marge<0){
+    dec.className='decision nogo';
+    dec.innerHTML=`<span class="lbl">Ne pas lancer en l'état</span><div class="big">Aucun des deux véhicules n'est rentable</div>
+    <p>Avec ${p.courses} courses par jour, la meilleure option (${names[bestK]}) perd ${F(-best.marge)} par mois une fois le loyer payé. Il faudrait au moins ${pm[bestK]?N1(pm[bestK]):'plus de 60'} courses par jour, un loyer plus bas ou un apport plus élevé.</p>`;
+  } else {
+    dec.className='decision';
+    const why=[
+      `Il laisse au chauffeur <strong>${F(best.marge)} par mois</strong> après loyer, contre ${F(oth.marge)} pour la ${names[othK]}, soit <strong>${F(diff)} de plus</strong> chaque mois et ${F(diff*p.duree)} sur ${p.duree} mois.`,
+      `Son loyer BCI est de ${F(best.mens)} par mois, contre ${F(oth.mens)}.`,
+      `Il coûte ${N1(best.coutKm)} FCFA par km tout compris, contre ${N1(oth.coutKm)} FCFA.`,
+      bestWins===3 ? `Il reste le meilleur choix dans les trois scénarios d'activité (15, 20 et 25 courses par jour).` : `Il est le meilleur choix dans ${bestWins} scénario(s) d'activité sur 3.`,
+      `Le chauffeur est à l'équilibre dès ${pm[bestK]?N1(pm[bestK]):'—'} courses par jour, contre ${pm[othK]?N1(pm[othK]):'plus de 60'} pour la ${names[othK]}.`
+    ];
+    const caveat = oth.marge<0 ? `La ${names[othK]} fait perdre ${F(-oth.marge)} par mois au chauffeur dans ce scénario.` : `La ${names[othK]} reste rentable mais demande un chauffeur plus actif pour justifier son prix.`;
+    dec.innerHTML=`<span class="lbl">Recommandation</span><div class="big" style="color:var(--${bestK==='g'?'geely':'wuling'})">${names[bestK]}</div>
+      <ul>${why.map(x=>`<li>${x}</li>`).join('')}</ul><p><strong>À noter :</strong> ${caveat} Cette recommandation repose sur des prix estimés. Elle doit être confirmée par un pilote de 3 mois.</p>`;
+  }
+
+  // 2. Tuiles
+  const tile=(t,a,b,sm)=>`<div class="tile"><span class="t">${t}</span><div class="v"><span class="g">${a}</span><span class="w">${b}</span></div><small>${sm}</small></div>`;
+  $('r_tiles').innerHTML =
+    tile('Marge nette / mois', N(g.marge), N(w.marge), 'FCFA · Geely en bleu, Wuling en orange') +
+    tile('Loyer BCI / mois', N(g.mens), N(w.mens), `FCFA · ${p.duree} mois à ${N1(p.taux)} %, apport ${N(p.apport)}`) +
+    tile('Coût au km', N1(g.coutKm), N1(w.coutKm), 'FCFA/km, coût total de possession') +
+    tile('Équilibre', (pmG?N1(pmG):'>60'), (pmW?N1(pmW):'>60'), 'courses/jour pour couvrir tous les coûts');
+
+  // 3. Scénarios
+  const cell=(m)=>`<td class="${m<0?'neg':''}">${N(m)} <span class="u">FCFA</span></td>`;
+  const verdict=(x)=>{ const b=x.w>x.g?'w':'g'; const o=b==='g'?x.w:x.g; const bm=b==='g'?x.g:x.w;
+    if(bm<0) return '<span class="pill ko">Aucun rentable</span>';
+    return `<span class="pill ${o<0?'mid':'ok'}">${names[b]}</span>`; };
+  $('r_scn_intro').textContent = `Même panier moyen (${N(p.tarifc)} FCFA par course) et mêmes coûts. Seul le nombre de courses par jour change. Marge nette mensuelle après loyer :`;
+  $('r_scn').innerHTML = `<thead><tr><th>Scénario</th><th>CA brut / jour</th><th class="th-g">Geely</th><th class="th-w">Wuling</th><th>Meilleur choix</th></tr></thead><tbody>`+
+    scn.map((x,i)=>`<tr${x.c===p.courses?' class="key"':''}><td>${['Prudent','Référence','Haut'][i]} · ${x.c} courses</td><td>${N(x.c*p.tarifc)} <span class="u">FCFA</span></td>${cell(x.g)}${cell(x.w)}<td>${verdict(x)}</td></tr>`).join('')+'</tbody>';
+
+  // 4. Barres
+  const seg=[['Loyer BCI','mens','--s1'],['Énergie','energie','--s2'],['Batterie','batterie','--s3'],['Assurance + maintenance','fixes','--s4'],['Recharge (temps perdu)','manque','--s5']];
+  $('r_bars').innerHTML = ['g','w'].map(k=>{ const r=R[k]; const tot=seg.reduce((a,s)=>a+r[s[1]],0); const base=Math.max(r.caNet,tot);
+    const parts=seg.map(s=>{ const pc=r[s[1]]/base*100; return `<span style="width:${pc}%;background:var(${s[2]})" title="${s[0]} : ${N(r[s[1]])} FCFA">${pc>9?Math.round(r[s[1]]/r.caNet*100)+' %':''}</span>`; }).join('');
+    const mg = r.marge>0 ? `<span style="width:${r.marge/base*100}%;background:var(--good)">${r.marge/base*100>9?Math.round(r.marge/r.caNet*100)+' %':''}</span>` : '';
+    return `<div class="rowv"><div class="hd"><span><span class="dot ${k}"></span> ${names[k]}</span><span>${r.marge>=0?'Reste au chauffeur : ':'Déficit : '}<span style="color:var(--${r.marge>=0?'good':'bad'})">${F(r.marge)}</span></span></div><div class="bar">${parts}${mg}</div>${r.marge<0?`<span class="fine">Les coûts dépassent le chiffre d'affaires net de ${F(-r.marge)}.</span>`:''}</div>`; }).join('');
+  $('r_leg').innerHTML = seg.map(s=>`<span><i style="background:var(${s[2]})"></i>${s[0]}</span>`).join('')+`<span><i style="background:var(--good)"></i>Marge chauffeur</span>`;
+
+  // 5. P&L
+  const pl=[['CA brut','caBrut'],['− Commission Yango','commission'],['= CA net','caNet',1],['− Énergie','energie'],['− Batterie (usure)','batterie'],['− Assurance + maintenance','fixes'],['− Temps de recharge','manque'],['− Loyer BCI','mens'],['= Marge nette chauffeur','marge',1],['Soit par heure travaillée','margeHeure']];
+  $('r_pl').innerHTML = `<thead><tr><th>Poste (FCFA / mois)</th><th class="th-g">Geely</th><th class="th-w">Wuling</th></tr></thead><tbody>`+
+    pl.map(([l,k,b])=>`<tr${b?' class="key"':''}><td>${l}</td><td class="${g[k]<0?'neg':''}">${N(g[k])}</td><td class="${w[k]<0?'neg':''}">${N(w[k])}</td></tr>`).join('')+'</tbody>';
+
+  // 6. Risques
+  const risks=[
+    ['Le taux BCI est de '+N1(p.taux+4)+' % au lieu de '+N1(p.taux)+' %', {...p,taux:p.taux+4}],
+    ['Recharge sur borne publique à 250 FCFA/kWh', {...p,senelec:250}],
+    ['Le chauffeur fait 5 courses de moins par jour', {...p,courses:Math.max(1,p.courses-5)}],
+    ['50 km de plus par jour pour le même chiffre d\'affaires', {...p,km:p.km+50}],
+    ['Commission Yango à 25 %', {...p,comm:25}],
+  ];
+  const vRisk={g:{...vg,cyc:vg.cyc*0.7},w:{...vw,cyc:vw.cyc*0.7}};
+  const dfmt=d=>`<span style="color:var(--${d<0?'bad':'good'})">${S(d)}</span>`;
+  let rh=`<div class="r" style="font-size:12px;font-weight:600;color:var(--ink-3);text-transform:uppercase;letter-spacing:.05em"><span>Risque</span><span class="th-g">Geely</span><span class="th-w">Wuling</span></div>`;
+  risks.forEach(([l,q])=>{ rh+=`<div class="r"><span>${l}</span><span class="d">${dfmt(calc(vg,q).marge-g.marge)}</span><span class="d">${dfmt(calc(vw,q).marge-w.marge)}</span></div>`; });
+  rh+=`<div class="r"><span>La batterie dure 30 % de cycles en moins (chaleur, usage intensif)</span><span class="d">${dfmt(calc(vRisk.g,p).marge-g.marge)}</span><span class="d">${dfmt(calc(vRisk.w,p).marge-w.marge)}</span></div>`;
+  $('r_risk').innerHTML=rh;
+
+  // 7. Étapes
+  const steps=[
+    `<strong>Obtenir deux devis fermes</strong> (prix d'achat, garantie batterie, disponibilité des pièces à Dakar) pour la Geely EX2 Pro et la Wuling Bingo.`,
+    `<strong>Faire confirmer par BCI</strong> le taux réel, la durée, l'apport, et ce que le loyer inclut (assurance, maintenance, couverture sociale).`,
+    `<strong>Lancer un pilote de 3 mois</strong> avec 2 ou 3 véhicules ${names[bestK]}, en mesurant chaque jour : courses, chiffre d'affaires, km, kWh rechargés et temps de recharge.`,
+    `<strong>Sécuriser la recharge</strong> : point de charge de nuit pour chaque chauffeur et accès à une borne rapide en journée (au-delà d'environ 200 km/jour).`,
+    `<strong>Décider du volume</strong> à la fin du pilote, avec les chiffres réels réinjectés dans ce simulateur.`
+  ];
+  $('r_steps').innerHTML=steps.map(x=>`<li><span>${x}</span></li>`).join('');
+
+  // 8. Hypothèses
+  const hyp=[
+    ['Prix d\'achat', F(vg.prix), F(vw.prix)],
+    ['Batterie · autonomie réelle', `${N1(vg.batt)} kWh · ${N(g.R)} km`, `${N1(vw.batt)} kWh · ${N(w.R)} km`],
+    ['Consommation réelle', `${N1(vg.conso)} kWh/100 km`, `${N1(vw.conso)} kWh/100 km`],
+    ['Batterie neuve · durée de vie', `${F(vg.cbatt)} · ${N(vg.cyc)} cycles`, `${F(vw.cbatt)} · ${N(vw.cyc)} cycles`],
+    ['Recharges rapides en journée', `${g.nRecharges} × ${vg.rap} min`, `${w.nRecharges} × ${vw.rap} min`],
+  ];
+  const com=[
+    ['Leasing BCI', `apport ${F(p.apport)}, ${p.duree} mois à ${N1(p.taux)} %, valeur résiduelle ${p.resid} %`],
+    ['Activité', `${p.courses} courses/jour à ${N(p.tarifc)} FCFA, ${p.jours} jours/mois, ${p.heures} h/jour, ${p.km} km/jour`],
+    ['Commission Yango', `${N1(p.comm)} %`],
+    ['Électricité', `${N1(p.senelec)} FCFA/kWh`],
+    ['Assurance · maintenance', p.inclus ? 'incluses dans le loyer BCI' : `${F(p.assur)}/an · ${F(p.maint)}/mois`],
+  ];
+  $('r_hyp').innerHTML = `<thead><tr><th>Véhicule</th><th class="th-g">Geely EX2 Pro</th><th class="th-w">Wuling Bingo</th></tr></thead><tbody>`+
+    hyp.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('')+
+    `<tr class="grp"><td colspan="3">Communes aux deux</td></tr>`+
+    com.map(r=>`<tr><td>${r[0]}</td><td colspan="2" style="text-align:left;white-space:normal">${r[1]}</td></tr>`).join('')+'</tbody>';
+
+  // Résumé texte
+  lastSummary = [
+    `RAPPORT DE DÉCISION · VTC électrique Dakar · ${$('rep_date').value}`,
+    `Préparé pour : ${$('rep_for').value} · par : ${$('rep_by').value}`,
+    ``,
+    best.marge<0 ? `DÉCISION : ne pas lancer en l'état, aucun véhicule rentable à ${p.courses} courses/jour.` : `RECOMMANDATION : ${names[bestK]}`,
+    `Marge nette chauffeur / mois : Geely ${F(g.marge)} · Wuling ${F(w.marge)}`,
+    `Loyer BCI / mois : Geely ${F(g.mens)} · Wuling ${F(w.mens)}`,
+    `Coût au km : Geely ${N1(g.coutKm)} FCFA · Wuling ${N1(w.coutKm)} FCFA`,
+    `Équilibre : Geely ${pmG?N1(pmG):'>60'} courses/jour · Wuling ${pmW?N1(pmW):'>60'} courses/jour`,
+    ``,
+    `Scénarios (marge nette / mois) :`,
+    ...scn.map((x,i)=>`- ${['Prudent','Référence','Haut'][i]} ${x.c} courses : Geely ${F(x.g)} · Wuling ${F(x.w)}`),
+    ``,
+    `Hypothèses : ${p.courses} courses/jour à ${N(p.tarifc)} FCFA, ${p.km} km/jour, ${p.jours} j/mois, apport ${F(p.apport)}, ${p.duree} mois à ${N1(p.taux)} %, électricité ${N1(p.senelec)} FCFA/kWh. Prix estimés, à confirmer par devis.`,
+    `Prochaine étape : pilote de 3 mois avec 2 ou 3 ${names[bestK]}.`
+  ].join('\n');
+}
+function showTab(rep){
+  $('simView').hidden = rep; $('repView').hidden = !rep;
+  $('repView').style.display = rep ? 'flex' : 'none';
+  $('tabSim').setAttribute('aria-selected', !rep); $('tabRep').setAttribute('aria-selected', rep);
+  if(rep) renderReport(); else { makeCharts(); render(); }
+  window.scrollTo(0,0);
+}
+$('tabSim').addEventListener('click',()=>showTab(false));
+$('tabRep').addEventListener('click',()=>showTab(true));
+['rep_for','rep_by','rep_date'].forEach(id=>$(id).addEventListener('input',renderReport));
+$('copyRep').addEventListener('click',()=>{
+  renderReport();
+  const done=()=>{ $('copyMsg').textContent='Résumé copié'; setTimeout(()=>$('copyMsg').textContent='',2500); };
+  try{ navigator.clipboard.writeText(lastSummary).then(done).catch(fallback); }catch(e){ fallback(); }
+  function fallback(){ const t=document.createElement('textarea'); t.value=lastSummary; t.style.position='fixed'; t.style.opacity='0'; document.body.appendChild(t); t.select(); try{document.execCommand('copy'); done();}catch(e){ $('copyMsg').textContent='Copie impossible ici'; } t.remove(); }
+});
+
+makeCharts(); render();
+if(location.hash==='#rapport') showTab(true);
+window.__carRefresh=()=>{ if($('repView').hidden){ makeCharts(); render(); } else renderReport(); };
+})();
+</script>
+<script>
+(function(){
+const DEF={km:120,jours:26,heures:10,liv:20,caliv:1000,horizon:36,flotte:1,
+  modele:"970000",prixE:970000,kwh:3.36,auto:100,pertes:15,tarif:"147.43",
+  mode:"classic",lost:0,swap:1500,batp:350000,cycles:1000,maintE:5000,assE:8000,resE:25,
+  prixT:350000,conso:2.5,carbu:990,maintT:15000,assT:8000,resT:30,loyer:65000};
+const ids=Object.keys(DEF).filter(k=>k!=="mode");
+const $=id=>document.getElementById("m_"+id);
+let S={...DEF};
+
+const nf=new Intl.NumberFormat("fr-FR",{maximumFractionDigits:0});
+const nf1=new Intl.NumberFormat("fr-FR",{maximumFractionDigits:1});
+const F=v=>isFinite(v)?nf.format(Math.round(v)):"–";
+const FC=v=>F(v)+" FCFA";
+const short=v=>{const a=Math.abs(v);if(a>=1e6)return nf1.format(v/1e6)+" M";if(a>=1e3)return nf.format(v/1e3)+" k";return nf.format(v)};
+
+function fill(){ids.forEach(k=>{$(k).value=S[k]});$("kmR").value=S.km;setMode(S.mode,false)}
+function read(){ids.forEach(k=>{const el=$(k);S[k]=(el.tagName==="SELECT")?el.value:(parseFloat(el.value)||0)})}
+
+function setMode(m,recalc=true){
+  S.mode=m;
+  $("m-classic").setAttribute("aria-pressed",m==="classic");
+  $("m-swap").setAttribute("aria-pressed",m==="swap");
+  $("w-lost").hidden=m!=="classic";$("w-batp").hidden=m!=="classic";$("w-cyc").hidden=m!=="classic";
+  $("w-swap").hidden=m!=="swap";
+  $("h-mode").innerHTML=m==="swap"
+    ?"En swap, l'opérateur possède les batteries : le prix de l'échange couvre l'énergie et l'usure batterie. Aucune immobilisation."
+    :"La batterie est l'<b>inconnue principale</b> : demandez au fournisseur son prix, les cycles garantis et la capacité restante après 1 000 cycles.";
+  if(recalc)calc();
+}
+
+function model(p){
+  const kmM=p.km*p.jours;
+  const fuelKm=p.conso*p.carbu/100;
+  const swap=p.mode==="swap";
+  const elecKm=swap? p.swap/p.auto : p.kwh*parseFloat(p.tarif)*(1+p.pertes/100)/p.auto;
+  const batKm=swap?0:p.batp/(p.cycles*p.auto);
+  const caH=p.heures>0?p.liv*p.caliv/p.heures:0;
+  const lostM=swap?0:p.lost*p.jours*caH;
+  const fixE=p.maintE+p.assE, fixT=p.maintT+p.assT;
+  const opexE=kmM*elecKm+fixE+lostM;          // cash hors batterie
+  const provE=kmM*batKm;                       // provision batterie
+  const opexT=kmM*fuelKm+fixT;
+  const save=opexT-(opexE+provE);
+  const extra=p.prixE-p.prixT;
+  const pay=save>0?extra/save:Infinity;
+  const H=p.horizon;
+  const cyclesM=kmM/p.auto;
+  const repl=m=>swap?0:Math.floor(cyclesM*m/p.cycles+1e-9);
+  const cumE=m=>p.prixE+m*opexE+repl(m)*p.batp;
+  const cumT=m=>p.prixT+m*opexT;
+  const resE=p.prixE*p.resE/100,resT=p.prixT*p.resT/100;
+  const tcoE=cumE(H)-resE, tcoT=cumT(H)-resT;
+  let cross=null;
+  for(let m=1;m<=H*3&&m<=240;m++){if(cumE(m)<=cumT(m)){ // interpolation
+      const a=cumE(m-1)-cumT(m-1),b=cumE(m)-cumT(m);cross=(m-1)+a/(a-b);break;}}
+  // coût / 100 km
+  const kmH=kmM*H||1;
+  const per=v=>v/kmM*100;
+  const partsE={energie:elecKm*100,batterie:batKm*100,fixe:per(fixE),amort:(p.prixE-resE)/kmH*100,immo:per(lostM)};
+  const partsT={energie:fuelKm*100,batterie:0,fixe:per(fixT),amort:(p.prixT-resT)/kmH*100,immo:0};
+  const sum=o=>Object.values(o).reduce((a,b)=>a+b,0);
+  return {kmM,fuelKm,elecKm,batKm,caH,lostM,fixE,fixT,opexE,provE,opexT,save,extra,pay,cumE,cumT,repl,cyclesM,tcoE,tcoT,resE,resT,cross,partsE,partsT,c100E:sum(partsE),c100T:sum(partsT),swap};
+}
+
+const PARTS=[["energie","Énergie","var(--elec)","var(--therm)"],["batterie","Usure batterie","var(--elec)","var(--therm)"],["fixe","Entretien + assurance","var(--muted)","var(--muted)"],["amort","Perte de valeur du véhicule","var(--ink)","var(--ink)"],["immo","Courses perdues (recharge)","var(--bad)","var(--bad)"]];
+const OP=[1,.55,.4,.22,.75];
+
+function stack(el,parts,max,side){
+  el.innerHTML=PARTS.map(([k,l,ce,ct],i)=>{const v=parts[k];if(v<=0.05)return"";
+    const w=v/max*100;return `<span title="${l} : ${F(v)} FCFA" style="width:${w}%;background:${side==="E"?ce:ct};opacity:${OP[i]}"></span>`}).join("");
+}
+
+function chart(r,p){
+  const svg=$("chart"),W=640,Hh=290,L=62,R=16,T=18,B=34;
+  const H=p.horizon;
+  const pts=[];let max=0;
+  for(let m=0;m<=H;m++){const e=r.cumE(m),t=r.cumT(m);pts.push([m,e,t]);max=Math.max(max,e,t)}
+  const step=niceStep(max/5);const top=Math.ceil(max/step)*step;
+  const x=m=>L+(W-L-R)*m/H, y=v=>T+(Hh-T-B)*(1-v/top);
+  let g="";
+  for(let v=0;v<=top+1;v+=step){g+=`<line class="grid-l" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end">${short(v)}</text>`}
+  const xt=H<=12?3:H<=36?6:12;
+  for(let m=0;m<=H;m+=xt){g+=`<text x="${x(m)}" y="${Hh-12}" text-anchor="middle">${m===0?"achat":m+" m"}</text>`}
+  g+=`<line class="axis" x1="${L}" x2="${W-R}" y1="${y(0)}" y2="${y(0)}"/>`;
+  const pathE=pts.map((q,i)=>(i?"L":"M")+x(q[0]).toFixed(1)+","+y(q[1]).toFixed(1)).join("");
+  const pathT=pts.map((q,i)=>(i?"L":"M")+x(q[0]).toFixed(1)+","+y(q[2]).toFixed(1)).join("");
+  g+=`<path class="l-t" d="${pathT}"/><path class="l-e" d="${pathE}"/>`;
+  // battery replacements
+  let prev=0;for(let m=1;m<=H;m++){const n=r.repl(m);if(n>prev){g+=`<circle class="bat" cx="${x(m)}" cy="${y(r.cumE(m))}" r="4.5"><title>Batterie n°${n+1} au mois ${m}</title></circle>`;prev=n}}
+  if(r.cross!==null&&r.cross<=H){const cx=x(r.cross),cy=y(r.cumT(r.cross));
+    const anchor=cx>W-150?"end":"start";const dx=anchor==="end"?-10:10;
+    g+=`<circle class="cross" cx="${cx}" cy="${cy}" r="6"/><text class="cross-t" x="${cx+dx}" y="${cy+24}" text-anchor="${anchor}">Point de bascule · mois ${nf1.format(r.cross)}</text>`}
+  svg.innerHTML=g;
+  $("chart-sub").textContent=`Sur ${H} mois : électrique ${FC(r.cumE(H))}, thermique ${FC(r.cumT(H))} (avant revente). La batterie est payée au remplacement, d'où un point de bascule plus précoce que le délai d'amortissement provisionné.`;
+}
+function niceStep(raw){const p=Math.pow(10,Math.floor(Math.log10(raw||1)));const n=raw/p;return (n<=1?1:n<=2?2:n<=2.5?2.5:n<=5?5:10)*p}
+
+function calc(){
+  read();const p=S,r=model(p);
+  // verdict bars
+  const max=Math.max(r.c100E,r.c100T)*1.02;
+  stack($("stackE"),r.partsE,max,"E");stack($("stackT"),r.partsT,max,"T");
+  $("totE").textContent=FC(r.c100E);$("totT").textContent=FC(r.c100T);
+  $("legend").innerHTML=PARTS.filter(([k])=>r.partsE[k]>0.05||r.partsT[k]>0.05).map(([k,l,ce],i)=>`<span><i style="background:${ce};opacity:${OP[PARTS.findIndex(x=>x[0]===k)]}"></i>${l}</span>`).join("");
+  const d=r.c100T-r.c100E;
+  $("v-title").textContent=d>0?`100 km coûtent ${F(d)} FCFA de moins en électrique, batterie comprise`:`100 km coûtent ${F(-d)} FCFA de plus en électrique, batterie comprise`;
+
+  $("k-save").textContent=(r.save>=0?"+":"")+FC(r.save);
+  $("k-save").style.color=r.save>=0?"var(--good)":"var(--bad)";
+  $("k-save-s").textContent=p.flotte>1?`${FC(r.save*p.flotte)} pour ${p.flotte} motos`:"batterie provisionnée";
+  if(isFinite(r.pay)){$("k-pay").textContent=nf1.format(r.pay)+" mois";$("k-pay-s").textContent=`surcoût de ${FC(r.extra)}`}
+  else{$("k-pay").textContent=r.extra<=0?"immédiat":"jamais";$("k-pay-s").textContent=r.extra<=0?"l'électrique coûte moins cher à l'achat":"l'électrique ne dégage pas d'économie"}
+  const gain=r.tcoT-r.tcoE;
+  $("k-tco-l").textContent=`Gain sur ${p.horizon} mois (TCO)`;
+  $("k-tco").textContent=(gain>=0?"+":"")+short(gain)+" FCFA";$("k-tco").style.color=gain>=0?"var(--good)":"var(--bad)";
+  $("k-tco-s").textContent=p.flotte>1?`${short(gain*p.flotte)} FCFA pour la flotte`:`TCO élec. ${short(r.tcoE)} · therm. ${short(r.tcoT)}`;
+  // status
+  let cls,txt,sub;
+  if(p.mode==="classic"&&p.km>p.auto){cls="warn";txt="Recharge en journée";sub=`${p.km} km/j dépasse l'autonomie de ${p.auto} km : étudiez le swap (seuil ~100 km/j).`}
+  else if(r.save<=0){cls="bad";txt="Pas rentable";sub="Les économies d'exploitation ne couvrent pas les coûts électriques."}
+  else if(r.pay<=12){cls="good";txt="Rentable";sub="Surcoût amorti en moins d'un an, à confirmer par un pilote."}
+  else if(r.pay<=p.horizon){cls="warn";txt="Rentable à terme";sub="Amortissement lent : vérifiez batterie et kilométrage."}
+  else{cls="bad";txt="Trop lent";sub="Surcoût non récupéré sur la durée d'analyse."}
+  $("k-status").innerHTML=`<span class="pill ${cls}">${txt}</span>`;$("k-status-s").textContent=sub;
+
+  // detail
+  const row=(l,e,t,s)=>`<div class="${s?"strong":""}">${l}</div><div class="n ${s?"strong":""}">${e}</div><div class="n ${s?"strong":""}">${t}</div>`;
+  $("det-sub").textContent=`${F(r.kmM)} km/mois · ${nf1.format(r.cyclesM)} cycles de charge/mois`+(r.swap?"":` · batterie à remplacer tous les ${nf1.format(p.cycles/r.cyclesM)} mois`);
+  $("cmp").innerHTML=`<div class="h"></div><div class="h he">Électrique</div><div class="h ht">Thermique</div>`+
+    row("Énergie / km",nf1.format(r.elecKm)+" F",nf1.format(r.fuelKm)+" F")+
+    row(r.swap?"Énergie (swap)":"Électricité",FC(r.kmM*r.elecKm),"–")+
+    row("Carburant","–",FC(r.kmM*r.fuelKm))+
+    row("Provision batterie",r.swap?"incluse":FC(r.provE),"–")+
+    row("Entretien + assurance",FC(r.fixE),FC(r.fixT))+
+    (r.lostM>0?row("Courses perdues",FC(r.lostM),"–"):"")+
+    row("Total mensuel",FC(r.opexE+r.provE),FC(r.opexT),true);
+
+  // productivity
+  const caM=p.liv*p.caliv*p.jours;
+  const livM=p.liv*p.jours||1, hM=p.heures*p.jours||1;
+  const livE=Math.max(0,p.liv-(r.swap?0:p.lost*(p.heures?p.liv/p.heures:0)))*p.jours;
+  const costE=r.opexE-r.lostM+r.provE;
+  const amE=(p.prixE-r.resE)/p.horizon, amT=(p.prixT-r.resT)/p.horizon;
+  const caE=caM-r.lostM;
+  $("prod").innerHTML=`<div class="h"></div><div class="h he">Électrique</div><div class="h ht">Thermique</div>`+
+    row("Livraisons / mois",F(livE),F(livM))+
+    row("Recette / mois",FC(caE),FC(caM))+
+    row("Coût / livraison",FC((costE+amE)/(livE||1)),FC((r.opexT+amT)/livM))+
+    row("Marge / heure",FC((caE-costE-amE)/hM),FC((caM-r.opexT-amT)/hM),true);
+
+  // sensitivity
+  const kms=[40,60,80,100,120,150,200];if(!kms.includes(p.km)){kms.push(p.km);kms.sort((a,b)=>a-b)}
+  let t=`<thead><tr><th>km/jour</th><th>Élec. /100 km</th><th>Therm. /100 km</th><th>Économie/mois</th><th>Amortissement</th></tr></thead><tbody>`;
+  kms.forEach(k=>{const q=model({...p,km:k});
+    const flag=(!q.swap&&k>p.auto)?" ⚡":"";
+    t+=`<tr class="${k===p.km?"cur":""}"><td class="num">${k}${flag}</td><td class="num">${F(q.c100E)}</td><td class="num">${F(q.c100T)}</td><td class="num" style="color:${q.save>=0?"var(--good)":"var(--bad)"}">${(q.save>=0?"+":"")+F(q.save)}</td><td class="num">${isFinite(q.pay)?nf1.format(q.pay)+" mois":(q.extra<=0?"immédiat":"jamais")}</td></tr>`});
+  t+=`</tbody>`;$("sens").innerHTML=t;
+  // LLD
+  const energyOnly=r.kmM*r.elecKm;
+  const lldE=p.loyer+energyOnly+p.assE+r.lostM;
+  const thermM=r.opexT+amT;
+  const diff=thermM-lldE;
+  $("lld").innerHTML=`<div class="cmp"><div class="h"></div><div class="h he">Élec. en location</div><div class="h ht">Thermique acheté</div>`+
+    row("Loyer / amortissement achat",FC(p.loyer),FC(amT))+
+    row("Énergie",FC(energyOnly),FC(r.kmM*r.fuelKm))+
+    row("Entretien + assurance",FC(p.assE),FC(r.fixT))+
+    (r.lostM>0?row("Courses perdues",FC(r.lostM),"–"):"")+
+    row("Coût mensuel",FC(lldE),FC(thermM),true)+`</div>`+
+    `<p><span class="pill ${diff>=0?"good":"bad"}">${diff>=0?"Location avantageuse":"Location plus chère"}</span> &nbsp;${diff>=0?`La location laisse ${FC(diff)} de plus par moto et par mois, sans immobiliser ${FC(p.prixE)}.`:`Il manque ${FC(-diff)} par mois : le loyer doit descendre sous ${FC(p.loyer+diff)}.`}</p>`;
+
+  chart(r,p);
+  try{localStorage.setItem("simMotoDakar",JSON.stringify(S))}catch(e){}
+}
+
+// events
+ids.forEach(k=>{$(k).addEventListener("input",()=>{
+  if(k==="km")$("kmR").value=$("km").value;
+  if(k==="modele"&&$("modele").value!=="custom")$("prixE").value=$("modele").value;
+  if(k==="prixE"){const o=[...$("modele").options].find(o=>o.value===$("prixE").value);$("modele").value=o?o.value:"custom"}
+  calc()})});
+$("kmR").addEventListener("input",()=>{$("km").value=$("kmR").value;calc()});
+$("m-classic").addEventListener("click",()=>setMode("classic"));
+$("m-swap").addEventListener("click",()=>setMode("swap"));
+$("reset").addEventListener("click",()=>{S={...DEF};fill();calc()});
+
+try{const s=JSON.parse(localStorage.getItem("simMotoDakar")||"null");if(s&&typeof s==="object")S={...DEF,...s}}catch(e){}
+fill();calc();
+})();
+</script>
+<script>
+(function(){
+  const car=document.getElementById('carView'), moto=document.getElementById('motoView');
+  const tc=document.getElementById('mtCar'), tm=document.getElementById('mtMoto');
+  function show(m){ car.hidden=m; moto.hidden=!m; tc.setAttribute('aria-selected',!m); tm.setAttribute('aria-selected',m);
+    if(!m && window.__carRefresh) window.__carRefresh();
+    try{ localStorage.setItem('simTab', m?'moto':'car'); }catch(e){} }
+  tc.addEventListener('click',()=>{show(false);window.scrollTo(0,0)});
+  tm.addEventListener('click',()=>{show(true);window.scrollTo(0,0)});
+  let start = location.hash==='#moto';
+  if(!start && location.hash!=='#rapport'){ try{ start = localStorage.getItem('simTab')==='moto'; }catch(e){} }
+  if(start) show(true);
+})();
+</script>
+
+</body>
+</html>
